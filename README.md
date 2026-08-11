@@ -76,17 +76,21 @@ Core intent:
 
 - `.docs/CONSTRAINTS.md` — hard boundaries from EQ client + practical server implications.
 - `.docs/ARCHITECTURE.md` — proposed system architecture for hybrid class capability.
+- `.docs/DESIGN-SKILL-CAP-SYSTEM.md` — the Attunement point-buy cap "equalizer" vision.
 - `.docs/ROADMAP-v0.1.0.md` — first milestone implementation roadmap.
 - `.docs/LOCAL-SETUP-WINDOWS.md` — ground-zero Windows + Visual Studio 2026 build guide.
 - `.docs/TRANSITION-TO-SERVER-CODE.md` — source intake (fork vs import) decision + kickoff.
+- `.bin/` — tooling: environment readiness checks + SQL/DB schema explorer.
 - `.github/agents/` — server-side agent modes (Server, Architect, Build).
 - `.github/copilot-instructions.md` — repo-wide working conventions.
 
 ## Getting Started
 
-1. Read `.docs/LOCAL-SETUP-WINDOWS.md` for the full first-time build walkthrough.
-2. Use `.docs/TRANSITION-TO-SERVER-CODE.md` to decide how to fork/import the server code.
-3. Aim for a clean baseline build before starting hybrid-class prototype work.
+1. Run the environment check: `pwsh -File .bin/check-environment.ps1`.
+2. Read `.docs/LOCAL-SETUP-WINDOWS.md` for the full first-time build walkthrough.
+3. Use `.docs/TRANSITION-TO-SERVER-CODE.md` to decide how to fork/import the server code.
+4. Skim `.docs/DESIGN-SKILL-CAP-SYSTEM.md` for the core gameplay vision.
+5. Aim for a clean baseline build before starting hybrid-class prototype work.
 
 ## Working Agreement
 

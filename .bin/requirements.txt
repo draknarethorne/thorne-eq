@@ -1,0 +1,5 @@
+# Python tooling dependencies for Thorne-EQ .bin scripts
+# Install: pip install -r .bin/requirements.txt
+
+# Live MariaDB inspection (optional; --sql-dir mode needs none of these)
+pymysql>=1.1.0
