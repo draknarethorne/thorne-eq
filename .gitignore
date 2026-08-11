@@ -1,0 +1,34 @@
+# Build output
+build/
+out/
+bin/
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.lib
+*.dll
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake-build-*/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Local server config & secrets (never commit)
+eqemu_config.json
+login.json
+*.local.json
+*.env
+
+# Python venv (tooling)
+.venv/
+__pycache__/
+
+# OS noise
+Thumbs.db
+.DS_Store

@@ -77,6 +77,16 @@ Core intent:
 - `.docs/CONSTRAINTS.md` — hard boundaries from EQ client + practical server implications.
 - `.docs/ARCHITECTURE.md` — proposed system architecture for hybrid class capability.
 - `.docs/ROADMAP-v0.1.0.md` — first milestone implementation roadmap.
+- `.docs/LOCAL-SETUP-WINDOWS.md` — ground-zero Windows + Visual Studio 2026 build guide.
+- `.docs/TRANSITION-TO-SERVER-CODE.md` — source intake (fork vs import) decision + kickoff.
+- `.github/agents/` — server-side agent modes (Server, Architect, Build).
+- `.github/copilot-instructions.md` — repo-wide working conventions.
+
+## Getting Started
+
+1. Read `.docs/LOCAL-SETUP-WINDOWS.md` for the full first-time build walkthrough.
+2. Use `.docs/TRANSITION-TO-SERVER-CODE.md` to decide how to fork/import the server code.
+3. Aim for a clean baseline build before starting hybrid-class prototype work.
 
 ## Working Agreement
 
