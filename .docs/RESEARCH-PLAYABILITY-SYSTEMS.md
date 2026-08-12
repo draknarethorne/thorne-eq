@@ -89,6 +89,76 @@ distributed across:
 If we want the exact implementation, the next pass should be a purpose-built diff of
 `Development/Source` against the closest original RunUO source snapshot.
 
+## Broader diff scan — shared-file hotspots
+
+To catch the "small adaptations everywhere" pattern, I also compared the **shared**
+script files between `C:\RunUO\UO2.3\2.3\Scripts` and `C:\RunUO\Development\Scripts`.
+There are **1106 changed shared files**, which confirms this was not only a custom-folder
+story; you also edited lots of stock behavior in place.
+
+### Highest-signal shared-file hotspots
+
+- `Mobiles/PlayerMobile.cs`
+- `Misc/CharacterCreation.cs`
+- `Items/Misc/Teleporter.cs`
+- `Items/Misc/Corpses/Corpse.cs`
+- `Misc/Loot.cs` and `Misc/LootPack.cs`
+- `Mobiles/Vendors/BaseVendor.cs` and many vendor/mobile files
+- `Skills/AnimalTaming.cs`
+- `Mobiles/Vendors/NPC/AnimalTrainer.cs`
+- `Spells/Base/SpellHelper.cs`
+- `Misc/AOS.cs`
+- `Engines/CannedEvil/ChampionSpawn.cs`
+- `Engines/Spawner/Spawner.cs`
+- `Items/Skill Items/Magical/Spellbook.cs`
+
+### What that likely means for Thorne-EQ
+
+The Featherstone philosophy was distributed through the whole game loop:
+
+- **starting state** (`CharacterCreation.cs`)
+- **travel and movement convenience** (`Teleporter.cs`)
+- **pet / tame / stable friendliness** (`AnimalTaming.cs`, `AnimalTrainer.cs`)
+- **loot and reward pacing** (`Loot.cs`, `LootPack.cs`, chest systems)
+- **combat feel and survivability** (`AOS.cs`, `SpellHelper.cs`, weapon/armor bases)
+- **service discoverability and vendor friendliness** (`BaseVendor.cs`, player-vendor UI)
+
+That is the direct analogue for Thorne-EQ: if we want it to feel great for friends and a
+small group, we should expect to tune **many small seams**, not chase a single silver bullet.
+
+## Starter spells / starter loot philosophy for EQ
+
+RunUO's `CharacterCreation.cs` is explicit: you front-loaded gold, travel, deeds, mounts,
+and even full spellbook-style support. The closest EQ analogue is very viable.
+
+### Feasible implementation lanes
+
+- **Starter spell satchel / class kit (preferred early path)**
+  Sold or granted by an NPC, keyed by class and level band. Contains the normal
+  vendor-purchasable scrolls/tomes for that class up to a target level
+  (e.g. 1-20, 1-40, 1-50). Player still **scribes** the items normally, so this
+  stays close to stock behavior.
+
+- **Bag-generating spell set token**
+  A clicky/token or quest reward that summons a bag of the right spell items.
+  EQ already has item-summon effects and item-summon-into-bag effects in `spdat`.
+
+- **Direct auto-scribe (more invasive)**
+  Write directly into the spellbook/profile instead of generating items. Possible,
+  but more invasive because it touches scribing semantics, spellbook state, and any
+  `allow_spellscribe` / spell global / spell bucket rules.
+
+### Starter-spell recommendation
+
+Use **items first, automation second**:
+
+- **starter loot** = a new-character boon package
+- **starter spells** = class-specific spell satchels or purchasable spell-set bundles
+- **later convenience** = optional direct-scribe helper only if the item flow feels too clunky
+
+That mirrors the Featherstone pattern cleanly: preserve the recognizable ritual, remove the
+needless vendor scavenger hunt.
+
 ## Concrete recommendations
 
 ### 1) Pets: fake “multiple pets” before building true multiple pets

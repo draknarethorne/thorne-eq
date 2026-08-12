@@ -27,6 +27,8 @@
 | Reagent-lite utility casting | QoL | Soon | 3 | Reduce pearl/bone-chip friction for baseline buffs/ports |
 | Out-of-combat recovery clickies | Diablo/UO | Soon | 3 | Reusable bandages/food-tonics for downtime smoothing |
 | Friends-and-family helper lane | UO | Later | 4 | Not GM power; a bounded assist mode for trusted private-server play |
+| Starter class spell satchel | UO/EQ | Soon | 3 | Grant/sell all vendor-tier scrolls/tomes for a class up to a level band |
+| Purchasable level-band spell sets | UO/EQ | Soon | 3/4 | e.g. 1-20, 21-40, 41-50 bundles so leveling never becomes a vendor crawl |
 | Pet auto-attack + hold/guard tuning | THJ | Soon | 3/4 | Small-group + AFK-safe |
 | Primary pet + swarm/ward companion model | THJ | Soon | 3/4 | Uses existing swarm-pet lane; avoids breaking the one-primary-pet client model |
 | Multiple simultaneous pets (2-3 per controller) | THJ | Later | 4/5 | Small-group force-multiplier; needs pet-cap + control UX audit |
@@ -90,6 +92,7 @@
 | Equalizer-as-AA spend model | Diablo/RIFT | Later | 5/6 | Zeal could make it feel like AA spending without trusting the client |
 | Attunement milestone quests | UO/AC | Soon | 3/4 | Unlock secondary perks through repeatable progression tasks |
 | Starter boon package | UO | Soon | 3 | Better new-character inventory, travel, and recovery baseline |
+| Optional direct-scribe convenience mode | EQ | Later | 5 | Only if scroll/tome bundles still feel too tedious after testing |
 
 ## Admin / GM
 
