@@ -1,5 +1,7 @@
 # ROADMAP v0.1.0 — Foundation Milestone
 
+> **Superseded by `.docs/ROADMAP.md`** (the master phased plan). Kept as Phase 0/1 detail.
+
 ## Milestone Intent
 
 Establish the planning, constraints, and first technical scaffolding for a Quarm-compatible hybrid capability system.

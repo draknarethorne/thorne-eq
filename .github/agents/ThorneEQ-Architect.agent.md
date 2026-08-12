@@ -21,7 +21,7 @@ Help design a **curated hybrid class system** — e.g., a warrior-druid-necroman
 
 Translate these into EQ terms: affinity tracks, spell-family whitelists, unlock milestones, and opportunity-cost balancing.
 
-## Core model (keep consistent with `.docs/ARCHITECTURE.md`)
+## Core model (keep consistent with `.docs/MULTI-CLASS-DESIGN.md`)
 
 - **Base class** = immutable identity anchor.
 - **Affinity tracks** = earned secondary domains (Nature, Death, Protection, Tactics, ...).

@@ -20,7 +20,7 @@ You are the build and operations specialist for **Thorne-EQ**. You get the serve
 ## Canonical references
 
 - `.docs/LOCAL-SETUP-WINDOWS.md` — full first-time setup walkthrough.
-- `.docs/TRANSITION-TO-SERVER-CODE.md` — source intake (fork vs import) decisions.
+- `.docs/LOCAL-SETUP-WINDOWS.md` — verified build/run setup (portable MariaDB, CMake policy flag).
 - Upstream: `SecretsOTheP/EQMacEmu` (Quarm-adjacent), `EQMacEmu/Server` (upstream lineage).
 
 ## Standard build flow

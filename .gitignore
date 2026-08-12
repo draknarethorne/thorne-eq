@@ -32,3 +32,15 @@ __pycache__/
 # OS noise
 Thumbs.db
 .DS_Store
+
+# Vendored server/quests source (tracked in their own forked repos, not here)
+server/
+quests/
+maps/
+
+# Local runtime engines (never commit binaries/DB data)
+mariadb/
+
+# Disposable local working dirs
+.tmp/
+.reports/

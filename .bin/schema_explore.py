@@ -22,8 +22,9 @@ digest. Degrades gracefully with clear guidance if no source is available.
 
 Usage:
   python .bin/schema_explore.py --sql-dir C:/Code/server-src/utils/sql/database_full
-  python .bin/schema_explore.py --db --database eqmac --user root
+  python .bin/schema_explore.py --db --database quarm --user root
 """
+
 from __future__ import annotations
 
 import argparse
@@ -57,10 +58,7 @@ def scan_sql_dir(sql_dir: Path) -> dict:
         report["warning"] = "No .sql files found. Point --sql-dir at the DB dump folder."
         return report
 
-    create_re = {
-        t: re.compile(rf"CREATE TABLE[^;]*`{t}`\s*\((.*?)\)\s*(ENGINE|;)", re.IGNORECASE | re.DOTALL)
-        for t in TARGET_TABLES
-    }
+    create_re = {t: re.compile(rf"CREATE TABLE[^;]*`{t}`\s*\((.*?)\)\s*(ENGINE|;)", re.IGNORECASE | re.DOTALL) for t in TARGET_TABLES}
     insert_re = {t: re.compile(rf"INSERT INTO `{t}`", re.IGNORECASE) for t in TARGET_TABLES}
     col_re = re.compile(r"^\s*`([A-Za-z0-9_]+)`", re.MULTILINE)
 
@@ -87,14 +85,14 @@ def scan_live_db(args: argparse.Namespace) -> dict:
         import pymysql  # type: ignore
     except ImportError:
         return {
-            "error": "pymysql not installed. Run: pip install -r .bin/requirements.txt",
+            "error": "pymysql not installed. Run: pip install -r requirements.txt",
             "hint": "Or use --sql-dir mode which needs no DB driver.",
         }
 
     host = args.host or os.environ.get("THORNE_EQ_DB_HOST", "127.0.0.1")
     user = args.user or os.environ.get("THORNE_EQ_DB_USER", "root")
     password = args.password or os.environ.get("THORNE_EQ_DB_PASSWORD", "")
-    database = args.database or os.environ.get("THORNE_EQ_DB_NAME", "eqmac")
+    database = args.database or os.environ.get("THORNE_EQ_DB_NAME", "quarm")
 
     report: dict = {"mode": "db", "source": f"{user}@{host}/{database}", "tables": {}}
     try:
@@ -109,8 +107,7 @@ def scan_live_db(args: argparse.Namespace) -> dict:
                 entry: dict = {"exists": False, "columns": [], "row_count": None}
                 try:
                     cur.execute(
-                        "SELECT COLUMN_NAME FROM information_schema.columns "
-                        "WHERE table_schema=%s AND table_name=%s ORDER BY ORDINAL_POSITION",
+                        "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_schema=%s AND table_name=%s ORDER BY ORDINAL_POSITION",
                         (database, t),
                     )
                     cols = [r[0] for r in cur.fetchall()]

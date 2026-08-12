@@ -1,0 +1,9 @@
+# Thorne-EQ development tooling (linting, formatting, git hooks).
+# Install:  .venv\Scripts\python -m pip install -r requirements-dev.txt
+
+-r requirements.txt
+
+ruff>=0.9.0              # Python lint + format
+pre-commit>=3.7.0        # git hook runner
+pymarkdownlnt>=0.9.16    # Markdown linting (docs are first-class here)
+yamllint>=1.35.1         # YAML frontmatter / config linting

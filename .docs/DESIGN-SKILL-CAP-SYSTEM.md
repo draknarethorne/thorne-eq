@@ -142,6 +142,6 @@ spell_is_usable(char, spell)
 
 ## Related Docs
 
-- `.docs/ARCHITECTURE.md` — capability resolver + data model.
-- `.docs/CONSTRAINTS.md` — EQ client boundaries.
-- `.docs/ROADMAP-v0.1.0.md` — foundation milestone.
+- `.docs/MULTI-CLASS-DESIGN.md` — current crux design (this Equalizer is its Phase 5 layer).
+- `.docs/ROADMAP.md` — master phased plan.
+- `.docs/CONSTRAINTS.md` — client/server boundaries.

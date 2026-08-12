@@ -1,0 +1,7 @@
+# Thorne-EQ runtime dependencies (used by the .bin tooling scripts).
+# Install into the local virtualenv:
+#   py -m venv .venv
+#   .venv\Scripts\python -m pip install -r requirements.txt
+
+pymysql>=1.1.0    # live MariaDB queries (control_server, manage_database, flag_multiclass)
+rich>=13.0.0      # nicer CLI output (optional; scripts degrade gracefully without it)

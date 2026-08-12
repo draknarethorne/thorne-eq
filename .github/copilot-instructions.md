@@ -36,7 +36,7 @@ Thorne-EQ is the **server-side** companion to Thorne-UI. It targets a custom, Qu
 
 ## Source-of-truth order
 
-`VERSION` → `README.md` → `.docs/ROADMAP-*.md` → `.docs/ARCHITECTURE.md` → `.docs/CONSTRAINTS.md`.
+`VERSION` → `README.md` → `.docs/ROADMAP.md` → `.docs/MULTI-CLASS-DESIGN.md` → `.docs/DECISIONS.md` → `.docs/CONSTRAINTS.md`.
 If in doubt, trust the running server + upstream code, then update docs to match.
 
 ## Safety

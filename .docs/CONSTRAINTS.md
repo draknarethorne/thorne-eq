@@ -61,11 +61,13 @@ We must design hybrid systems that are:
 
 ## Zeal / Extension Position
 
-Zeal and related client extensions are **assistive**, not authoritative.
+**Updated posture (2026-08-11):** approved client DLLs are a **permitted enhancement layer**,
+not forbidden. Zeal (CoastalRedwood `zeal.asi`), akplus, and MacroQuest-style tools may be
+used. The only hard line is **no full client rewrite**.
 
-- Core progression logic must run server-side.
-- Extension-only affordances should be optional enhancements.
-- Server behavior should remain coherent for standard client paths.
+- **Server-authoritative always** — core progression, unlocks, and eligibility run server-side.
+- Client DLLs provide **UX and convenience** (custom windows, gauges, readouts), never authority.
+- Server behavior must remain coherent for a stock client path (DLLs optional, not required).
 
 ## Design Rule of Thumb
 

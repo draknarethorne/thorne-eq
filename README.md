@@ -74,23 +74,32 @@ Core intent:
 
 ## Repository Layout
 
-- `.docs/CONSTRAINTS.md` — hard boundaries from EQ client + practical server implications.
-- `.docs/ARCHITECTURE.md` — proposed system architecture for hybrid class capability.
-- `.docs/DESIGN-SKILL-CAP-SYSTEM.md` — the Attunement point-buy cap "equalizer" vision.
-- `.docs/ROADMAP-v0.1.0.md` — first milestone implementation roadmap.
-- `.docs/LOCAL-SETUP-WINDOWS.md` — ground-zero Windows + Visual Studio 2026 build guide.
-- `.docs/TRANSITION-TO-SERVER-CODE.md` — source intake (fork vs import) decision + kickoff.
-- `.bin/` — tooling: environment readiness checks + SQL/DB schema explorer.
+Planning & design (`.docs/`):
+
+- `.docs/ROADMAP.md` — **master phased plan** (baseline → multi-class → playability).
+- `.docs/DECISIONS.md` — decision log: decided + open questions.
+- `.docs/BACKLOG.md` — itemized wants (Diablo/RIFT/THJ), prioritized by phase.
+- `.docs/MULTI-CLASS-DESIGN.md` — the crux design, grounded in the server source.
+- `.docs/CONSTRAINTS.md` — client/server boundaries (server-authoritative).
+- `.docs/DESIGN-SKILL-CAP-SYSTEM.md` — the optional Attunement "equalizer" layer.
+- `.docs/LOCAL-SETUP-WINDOWS.md` — verified Windows + VS 2026 build/run guide.
+- `.docs/archive/` — superseded docs kept for history (old roadmap, architecture, transition).
+
+Tooling & config:
+
+- `.bin/` — environment checks + SQL/DB schema explorer.
 - `.github/agents/` — server-side agent modes (Server, Architect, Build).
 - `.github/copilot-instructions.md` — repo-wide working conventions.
 
+Local-only (gitignored, not committed): `server/` (EQMacEmu fork), `quests/` (quests fork),
+`maps/`, `mariadb/` (portable engine + data). Client lives at `C:\TEQ`.
+
 ## Getting Started
 
-1. Run the environment check: `pwsh -File .bin/check-environment.ps1`.
-2. Read `.docs/LOCAL-SETUP-WINDOWS.md` for the full first-time build walkthrough.
-3. Use `.docs/TRANSITION-TO-SERVER-CODE.md` to decide how to fork/import the server code.
-4. Skim `.docs/DESIGN-SKILL-CAP-SYSTEM.md` for the core gameplay vision.
-5. Aim for a clean baseline build before starting hybrid-class prototype work.
+1. Read `.docs/ROADMAP.md` for the phased plan and current status.
+2. Read `.docs/LOCAL-SETUP-WINDOWS.md` for the verified build/run steps.
+3. Skim `.docs/MULTI-CLASS-DESIGN.md` for the core gameplay direction.
+4. See `.docs/DECISIONS.md` for open questions and `.docs/BACKLOG.md` for prioritized work.
 
 ## Working Agreement
 
@@ -100,6 +109,7 @@ Core intent:
 
 ## Status
 
-- **Phase:** Foundation / Planning
+- **Phase:** Baseline bring-up complete — server builds & connects to the Quarm DB; next is
+  the Phase 1 multi-class spike (see `.docs/ROADMAP.md`).
 - **Version:** `0.1.0-dev`
 - **Maintainer:** Draknare Thorne

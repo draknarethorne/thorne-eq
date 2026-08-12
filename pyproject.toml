@@ -1,0 +1,12 @@
+# Thorne-EQ Python tooling configuration.
+# Mirrors the Thorne-UI conventions (ruff, 180-col) for a consistent family of projects.
+
+[tool.ruff]
+line-length = 180
+target-version = "py312"
+extend-exclude = ["server", "quests", "maps", "mariadb", ".venv", ".tmp", ".reports"]
+
+[tool.ruff.format]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

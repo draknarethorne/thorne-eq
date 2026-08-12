@@ -1,5 +1,10 @@
 # Transition Guide — Thorne-EQ Server Bootstrap
 
+> **STATUS: COMPLETE (2026-08-11).** Forked `SecretsOTheP/EQMacEmu` + `quests` to
+> `draknarethorne/*`, cloned to `server/` + `quests/` with `upstream` remotes, imported the
+> Quarm DB, and achieved a verified build + DB connection. This doc is now historical; the
+> live plan lives in `.docs/ROADMAP.md` and `.docs/LOCAL-SETUP-WINDOWS.md`.
+
 ## Purpose
 
 This document is the handoff bridge for opening a fresh workspace + chat and deciding how to establish the canonical server-code foundation for `thorne-eq`.

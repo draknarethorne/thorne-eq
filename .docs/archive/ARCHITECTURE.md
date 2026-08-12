@@ -1,5 +1,8 @@
 # Thorne-EQ Hybrid Capability Architecture (Draft)
 
+> **Current direction lives in `.docs/MULTI-CLASS-DESIGN.md`** (grounded in the server source).
+> This draft is the conceptual capability-resolver model it builds on.
+
 ## Goal
 
 Enable curated multi-class-like progression while preserving EQ client compatibility and server operational safety.

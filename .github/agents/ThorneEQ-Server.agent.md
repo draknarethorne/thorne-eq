@@ -44,7 +44,7 @@ Implement and maintain server-side gameplay systems that enable **curated hybrid
 ## Data-driven bias
 
 - Favor DB tables + rules over hardcoded logic for anything designers may tune.
-- Reference conceptual model in `.docs/ARCHITECTURE.md` (affinity tracks, spell families, archetype profiles, capability resolver).
+- Reference the current design in `.docs/MULTI-CLASS-DESIGN.md` (declaration model, cast-time overlay, swap-lock) and `.docs/DECISIONS.md`.
 
 ## Output expectations
 

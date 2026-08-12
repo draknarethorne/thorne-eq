@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Thorne-EQ local build environment readiness check (Bash / Git Bash / WSL).
 # Read-only. Probes for Git, CMake (>=3.12), MariaDB client, Perl, Python.
-# Note: Visual Studio detection is best-effort here; use check-environment.ps1
+# Note: Visual Studio detection is best-effort here; use check_environment.ps1
 # on Windows for accurate VS C++ workload detection.
 
 set -u
@@ -39,10 +39,10 @@ check "Python"     no  python "https://www.python.org/downloads/"
 echo ""
 if [[ "$fail" -gt 0 ]]; then
   echo "  Missing $fail required component(s). See hints above."
-  echo "  On Windows, also run: pwsh -File .bin/check-environment.ps1"
+  echo "  On Windows, also run: pwsh -File .bin/check_environment.ps1"
   exit 1
 else
   echo "  All required CLI components present."
-  echo "  On Windows, confirm VS C++ via: pwsh -File .bin/check-environment.ps1"
+  echo "  On Windows, confirm VS C++ via: pwsh -File .bin/check_environment.ps1"
   exit 0
 fi

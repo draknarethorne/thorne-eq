@@ -12,7 +12,7 @@
   required component is missing.
 
 .EXAMPLE
-  pwsh -File .bin/check-environment.ps1
+  pwsh -File .bin/check_environment.ps1
 #>
 
 [CmdletBinding()]
@@ -79,7 +79,8 @@ $results += New-Result 'Python (tooling)' $false ([bool]$py) $pyVer 'https://www
 
 if ($Json) {
     $results | ConvertTo-Json -Depth 4
-} else {
+}
+else {
     Write-Host ''
     Write-Host '  Thorne-EQ Environment Readiness' -ForegroundColor Cyan
     Write-Host '  ===============================' -ForegroundColor Cyan
@@ -90,7 +91,8 @@ $missingRequired = @($results | Where-Object { $_.Required -and $_.Status -eq 'M
 if ($missingRequired.Count -gt 0) {
     Write-Host ("Missing {0} required component(s). See Detail column above." -f $missingRequired.Count) -ForegroundColor Yellow
     exit 1
-} else {
+}
+else {
     Write-Host 'All required components present. You are ready to build.' -ForegroundColor Green
     exit 0
 }
