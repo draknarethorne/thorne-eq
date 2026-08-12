@@ -76,3 +76,71 @@ Borrow THJ's **bitmask-overlay** mechanism, keep our **curated declaration** des
 **Net:** THJ proves the exact architecture works server-side; we implement a curated, declaration-
 gated version on the Mac lineage (where classless3 shows the same choke points). Ascendant /
 PerkyCrew are closed-source (no repos) — treated as design inspiration only (AA-choices + Rebirth).
+
+## Verified code extraction (diff pass, 2026-08-12)
+
+Ran a THJ-vs-EQEmu-upstream comparison (`B:\FirestormAlpha\TheHeroesJourneyServer` vs
+`B:\EQEmu\EQEmu`, saved under `.reports/thj_diff/`). **Method caveat:** THJ forked an
+**older** EQEmu (note the GPLv2->v3 relicense, `#pragma once` vs `#ifndef`, include-path
+refactor in current upstream), so whole-file diffs are dominated by **fork-age drift**, not
+multiclass logic (`mob.h` = 588, `client.h` = 732 diff lines, mostly noise). The reliable
+method is **symbol-targeted extraction** — and we port to EQMacEmu **by logic, not by patch**
+(EQMacEmu diverges again).
+
+**`Client::GetClassesBits()`** (`zone/client.cpp:14452`) — verified body:
+
+```cpp
+uint32 Client::GetClassesBits() const {
+    if (RuleB(Custom, MulticlassingEnabled))
+        return m_pp.classes;                    // live per-char bitmask
+    else
+        return GetPlayerClassBit(m_pp.class_);  // stock single-class fallback
+}
+```
+
+- **Storage (THJ):** the bitmask lives in `m_pp.classes` (a PlayerProfile `uint32`) **and** a
+  `GestaltClasses` data_bucket (`SetBucket("GestaltClasses", ...)`). Rule-off returns the
+  single-class bit -> **identical to stock behavior when disabled**.
+- **Declaration API:** `AddExtraClass()` / `RemoveExtraClass()` (`client.cpp:14461+`). Caps at
+  **3 classes total** (`class_count > 2` -> reject) — the curated ceiling. NPC-callable.
+- **Class range:** THJ loops `Class::Warrior .. Class::Berserker` (**1..16**). Mac/Quarm has
+  **no Berserker** — our loop is **1..15** (Beastlord). Porting delta.
+
+**Spell eligibility overlay** (`zone/spells.cpp:1303`, and `common/spdat.cpp:1012` for the
+min-level helper) — verified: iterate the character's set class bits and take the **lowest**
+`spells[spell_id].classes[class_id-1]` among them. A Necro+Mage casts a Mage spell at the
+**Mage** min-level. **Spell chains preserved** — confirmed, exactly our goal.
+
+### Storage decision for Thorne-EQ (answers "store it uniquely + efficiently")
+
+THJ reuses `m_pp.classes` — a **client-synced PlayerProfile field**. On the **Mac client** the
+PP struct is fixed and client-authoritative; repurposing a field risks desync and violates our
+`CLIENT-STRATEGY.md` "T0-T2 only" rule. **Our approach:** keep the declared bitmask **purely
+server-side** and have `GetClassesBits()` read it there, never touching the client PP:
+
+- **Option A (portable, THJ-style):** `data_buckets` key (e.g. `thorne.classes`) — schema-change-
+  free, rebuild-portable, but string-typed and one row per key.
+- **Option B (unique + queryable):** a dedicated `thorne_character_build` table
+  (`char_id`, `class_bits`, `primary_class`, affinity/allocation columns) — one row per
+  character, integer-typed, JOIN-friendly for future Equalizer/affinity queries; costs a
+  tracked migration in `db/bootstrap/`.
+- **Leaning:** start with **A** for the Phase 1 spike (fast, reversible), migrate to **B** when
+  affinity + Equalizer need real columns. Either way, `GetClassesBits()` is the single read
+  point, so the storage swap is internal. (Tracked in `BACKLOG.md` parking lot.)
+
+### Phase 1 port checklist (EQMacEmu, when unblocked)
+
+1. `common/ruletypes.h`: add `RULE_BOOL(Custom, MulticlassingEnabled, false, ...)` (default
+   **off** — safer than THJ's `true`).
+2. `common/classes.*`: confirm `GetPlayerClassBit()` exists (stock); add `GetPlayerClassIDByName()`
+   if we want NPC name->id (THJ helper).
+3. `Client::GetClassesBits()` overlay reading the **server-side** store (not `m_pp`), rule-gated
+   with single-class fallback; loop **1..15**.
+4. `Mob::HasClass(class, bitmask=0)` helper.
+5. Spell-eligibility overlay at EQMacEmu's equivalent of `spells.cpp:1303` — lowest min-level
+   among declared classes; **and NOT** hard-forbidden by our curated matrix.
+6. Declaration entry point (curated/gated `AddExtraClass` equivalent), driven by an NPC per
+   `CLIENT-STRATEGY.md` — not char-create.
+
+**Gate:** do NOT start until the **stock, unmodified** server is verified running and a client
+login test passes.

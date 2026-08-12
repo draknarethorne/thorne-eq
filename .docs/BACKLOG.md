@@ -25,6 +25,8 @@
 | On-kill / on-hit leech (earned) | Diablo | Soon | 3 | Death-affinity perk |
 | Longer buff durations | — | Soon | 3 | Rule multiplier |
 | Pet auto-attack + hold/guard tuning | THJ | Soon | 3/4 | Small-group + AFK-safe |
+| Multiple simultaneous pets (2-3 per controller) | THJ | Later | 4/5 | Small-group force-multiplier; needs pet-cap + control UX audit |
+| `/cast` from spellbook to build buff macros (no spellbar swap) | QoL | Later | 4 | Cast by spellbook slot so buffs run from a macro without memming; verify client `/cast` support |
 | 2-3 hybrid group content viability | — | MVP-of-fun | 3 | The key playtest |
 
 ## World & Travel
@@ -64,9 +66,15 @@
 | --- | --- | --- | --- | --- |
 | Zeal "Attunement" panel + gauges | — | Later | 6 | `uifiles/zeal` custom window |
 | Scribe-time UX via akplus/Zeal | — | Conditional | 1/6 | Only if Phase 1 shows client blocks scribing |
+| Class declaration via NPC (post-creation), not char-create | THJ (borrow) | Soon | 2 | Avoid a custom char-create client; use a Bazaar/Nexus NPC flow. See `CLIENT-STRATEGY.md` |
 
 ## Parking lot (raw ideas, undecided)
 
 - Diablo-style loot beams / rarity SFX (client limits on Mac client — likely icebox).
 - Endgame focus on Planes / later expansions instead of early grind.
 - Larger inventory/QoL conveniences to "get rid of early-level grinds".
+- Server-side storage "uniqueness": weigh a dedicated custom table (e.g. `thorne_character_build`)
+  vs. reusing `data_buckets` for declared classes / affinity / allocation — schema-change-free
+  and portable vs. more queryable/efficient. See `CLIENT-STRATEGY.md` + `MULTI-CLASS-DESIGN.md`.
+- Multiple-pet control and `/cast`-from-spellbook macros both depend on a client-capability
+  audit (Mac client + Zeal) before committing — see `CLIENT-STRATEGY.md`.
