@@ -88,7 +88,7 @@ not inventing from scratch.
 
 - **`skill_caps`** (class, skill, level → cap): the primary lever for per-skill caps.
   - We overlay a per-character delta driven by allocated points.
-- **`spells_new`** class columns (`classes_1..16` = min level per class; `255` = barred):
+- **`spells_new`** class columns (`classes1..15` = min level per class; `255` = barred):
   - Spell-line access is already class-gated by min level; we reinterpret eligibility
     server-side based on the character's channel investment + tier, not just base class.
 - **`character_skills`**: learned skill values (bounded by effective cap).

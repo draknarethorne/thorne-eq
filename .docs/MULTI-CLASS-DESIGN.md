@@ -18,7 +18,7 @@ Verified against `B:\SecretsOTheP\EQMacEmu`:
 | --- | --- | --- |
 | Class is a **single `uint8`**; no second-class exists | `zone/mob.h` `GetClass()` | Multi-class must be a **server overlay**, not a client-known second class |
 | One central spell-eligibility check | `common/spdat.h::CanUseSpell(spellid, class, level)` | The single choke point to overlay |
-| `spells_new.classes_1..16` = min level per class (255 = barred) | DB + `spdat.h` | Reuse existing per-class tables; no re-authoring spells |
+| `spells_new.classes1..15` = min level per class (255 = barred) | DB + `spdat.h` | Reuse existing per-class tables; no re-authoring spells |
 | Per-character key/value store | `data_buckets` | Store declared classes / allocation with no schema change |
 | Feature flags | `rule_values` (`RuleB/RuleI/RuleR`) | Stage safely, per-character or per-zone |
 | Augments **absent/disabled** | `common/item_data.h` | "Socket a class into a slot" = build-from-scratch (avoid early) |

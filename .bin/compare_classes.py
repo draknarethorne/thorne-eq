@@ -6,7 +6,7 @@ Read-only (auditor). Answers the questions we need before Phase 1:
   * How big is each class's spell list? (the landscape)
   * What do two classes already share?
 
-Reads `spells_new.classes1..16` (min level per class; 0/255 = cannot cast) from the
+Reads `spells_new.classes1..15` (min level per class; 0/255 = cannot cast) from the
 live DB. Connection via THORNE_EQ_DB_* env vars (defaults root@127.0.0.1 / quarm).
 
 Commands:

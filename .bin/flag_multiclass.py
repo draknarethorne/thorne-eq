@@ -179,8 +179,14 @@ def cmd_revoke(args: argparse.Namespace) -> None:
 def main() -> None:
     p = argparse.ArgumentParser(description="Thorne-EQ multi-class spike helper.")
     sub = p.add_subparsers(dest="command", required=True)
+    helps = {
+        "list": "List a class's currently castable spells.",
+        "check": "Show which given spells a class can/can't cast.",
+        "grant": "Grant a class access to spells (reversible; backs up first).",
+        "revoke": "Restore a class's original spell min-levels.",
+    }
     for name, fn, needs_spells in (("list", cmd_list, False), ("check", cmd_check, True), ("grant", cmd_grant, True), ("revoke", cmd_revoke, False)):
-        sp = sub.add_parser(name)
+        sp = sub.add_parser(name, help=helps[name])
         sp.add_argument("--class", dest="class_name", required=True, help="class name or id (1-16)")
         if needs_spells or name == "grant":
             sp.add_argument("--spells", required=(name != "revoke"), help="ids: '1,2,3' or ranges '1..20'")

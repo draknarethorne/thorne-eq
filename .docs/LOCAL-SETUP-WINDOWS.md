@@ -9,6 +9,11 @@ comfortable with tooling. Take it one section at a time.
 > (the MSI can fail on some Windows setups); CMake needs `-DCMAKE_POLICY_VERSION_MINIMUM=3.5`.
 > Folder layout: `C:\Thorne-EQ\{server,quests,maps,mariadb}` + client at `C:\TEQ`.
 > The `.docs/` companions `DECISIONS.md`, `ROADMAP.md`, `MULTI-CLASS-DESIGN.md` carry the plan.
+>
+> **Now scripted:** the day-to-day flow (start MariaDB, assemble the run dir, start/stop/
+> shutdown the process chain, import/bootstrap the DB) is automated by `.bin/control_server`
+> and `.bin/manage_database`. This guide remains the ground-truth explanation of *what*
+> those scripts do; the live database is named **`quarm`**.
 
 ---
 
@@ -77,7 +82,7 @@ dir). **Use the portable ZIP** and run it as your user instead:
 Create an empty database (via HeidiSQL or CLI):
 
 ```sql
-CREATE DATABASE eqmac CHARACTER SET utf8;
+CREATE DATABASE quarm CHARACTER SET utf8;
 ```
 
 ---
@@ -150,7 +155,7 @@ Build outputs (server executables) land under the build output directory
    - port: `3306`
    - username: `root` (or a dedicated user)
    - password: your MariaDB root password
-   - database: `eqmac`
+   - database: `quarm`
 3. Set world `shortname`/`longname` (your server's identity).
 
 > Keep real passwords out of git. Use a local config that is gitignored.
@@ -162,8 +167,9 @@ Build outputs (server executables) land under the build output directory
 From the server source `utils/sql/database_full` (or the linked DB dump):
 
 1. Unzip the dump if compressed.
-2. Import all provided `.sql` files into the `eqmac` database (HeidiSQL: File → Load SQL,
-   or CLI `mysql -u root -p eqmac < file.sql`).
+2. Import all provided `.sql` files into the `quarm` database (HeidiSQL: File → Load SQL,
+   or CLI `mysql -u root -p quarm < file.sql`). In practice, use
+   `manage_database.bat import --dump <dump>`, which handles the Quarm dump quirks.
 3. Run any required update/patch SQL noted in the upstream README.
 
 ---
