@@ -44,3 +44,8 @@ mariadb/
 # Disposable local working dirs
 .tmp/
 .reports/
+
+# --- Intentionally TRACKED (the from-scratch rebuild recipe) ---
+# .bin/          tooling scripts (NOT matched by 'bin/' build-output rule above)
+# config/        sanitized config templates (real eqemu_config.json/login.json stay ignored)
+# db/bootstrap/  custom SQL to rebuild launcher/users/etc. on a fresh DB

@@ -43,8 +43,23 @@ control_server.bat stop         REM stop all server processes
 ```bat
 manage_database.bat status
 manage_database.bat import --dump server\utils\sql\database_full\quarm_<date>.tar.gz
+manage_database.bat bootstrap          REM render config templates + apply custom SQL (users, launcher)
+manage_database.bat repair             REM auto-repair crashed MyISAM/Aria tables
 manage_database.bat backup
 manage_database.bat gm --account <name>            REM set account.status = 255
+```
+
+### Rebuild from scratch (the recipe)
+
+The custom pieces that aren't in the upstream dump live in the hub and are applied by script:
+
+- `config/*.template.*` -> rendered to `mariadb/my.ini`, `server/eqemu_config.json`, `server/login.json`
+- `db/bootstrap/*.sql` -> the `eq` DB user + the zone `launcher` tables
+
+```bat
+manage_database.bat import --dump <latest quarm dump>   REM load content
+manage_database.bat bootstrap --force                   REM users + launcher + configs
+control_server.bat start                                REM run it
 ```
 
 ### compare_classes — plan the tests

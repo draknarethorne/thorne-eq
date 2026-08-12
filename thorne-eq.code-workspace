@@ -1,27 +1,68 @@
 {
+  // Multi-root workspace: each repo shows as its own folder with independent Source Control.
+  // Display names carry the thorne_ brand without renaming folders (absolute paths stay valid).
   "folders": [
-    {
-      "path": "."
-    }
+    { "name": "thorne_eq (hub)", "path": "." },
+    { "name": "thorne_svr", "path": "server" },
+    { "name": "thorne_quests", "path": "quests" },
+    { "name": "thorne_maps", "path": "maps" },
+    { "name": "thorne_ui", "path": "../Thorne-UI" },
+    { "name": "thorne_timer", "path": "../Thorne-Timer" }
   ],
   "settings": {
+    // Hide the nested repos from the hub root so they only appear as their own folders.
     "files.exclude": {
-      "**/.git": false
-    },
-    "search.exclude": {
-      "**/node_modules": true,
+      "server": true,
+      "quests": true,
+      "maps": true,
+      "mariadb": true,
       "**/.venv": true
     },
-    "editor.formatOnSave": true,
-    "editor.rulers": [
-      100
-    ]
+    // Keep search + file-watching fast by ignoring build output and vendored trees.
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.venv": true,
+      "server/build": true,
+      "server/vcpkg": true,
+      "maps": true,
+      "mariadb": true,
+      "**/.tmp": true,
+      "**/obj": true,
+      "**/.vs": true,
+      "**/packages": true
+    },
+    "files.watcherExclude": {
+      "**/server/build/**": true,
+      "**/server/vcpkg/**": true,
+      "**/maps/**": true,
+      "**/mariadb/**": true,
+      "**/.venv/**": true,
+      "**/node_modules/**": true,
+      "**/obj/**": true,
+      "**/.vs/**": true,
+      "**/packages/**": true
+    },
+    "git.enabled": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.openRepositoryInParentFolders": "never",
+    "editor.formatOnSave": false,
+    "editor.rulers": [100],
+    "workbench.colorCustomizations": {
+      "editorRuler.foreground": "#444444"
+    },
+    "files.associations": {
+      "*.pl": "perl",
+      "eqemu_config.json": "jsonc",
+      "login.json": "jsonc"
+    }
   },
   "extensions": {
     "recommendations": [
       "ms-vscode.cpptools",
       "ms-vscode.cmake-tools",
       "ms-python.python",
+      "charliermarsh.ruff",
       "GitHub.copilot",
       "GitHub.copilot-chat"
     ]

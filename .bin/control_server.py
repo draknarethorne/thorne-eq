@@ -42,9 +42,11 @@ QUESTS_DIR = REPO_ROOT / "quests"
 LOG_DIR = REPO_ROOT / ".tmp" / "logs"
 
 # Start order matters: shared_memory populates the memory-mapped files the rest read.
-PROCESS_ORDER = ["shared_memory", "loginserver", "world", "zone"]
+# Zones boot via eqlaunch (a launcher pool) named below, not standalone zone.exe.
+LAUNCHER_NAME = "dynzone1"
+PROCESS_ORDER = ["shared_memory", "loginserver", "world", "eqlaunch"]
 OPTIONAL_PROCS = ["ucs", "queryserv"]
-ALL_PROCS = PROCESS_ORDER + OPTIONAL_PROCS
+ALL_PROCS = ["shared_memory", "loginserver", "world", "eqlaunch", "zone", "ucs", "queryserv"]
 
 IS_WINDOWS = sys.platform.startswith("win")
 
@@ -127,12 +129,14 @@ def cmd_assemble(_args: argparse.Namespace) -> None:
     _junction(RUN_DIR / "Maps", MAPS_DIR)
     _junction(RUN_DIR / "quests", QUESTS_DIR)
 
-    # vcpkg runtime DLLs (the applocal.ps1 post-build step fails on this box)
-    vcpkg_bin = SERVER_DIR / "vcpkg" / "vcpkg-export-x64" / "installed" / "x64-windows" / "bin"
-    if vcpkg_bin.exists() and not (RUN_DIR / "libmariadb.dll").exists():
-        for dll in vcpkg_bin.glob("*.dll"):
-            shutil.copy2(dll, RUN_DIR / dll.name)
-        say("  copied vcpkg runtime DLLs")
+    # Runtime DLLs the vcpkg applocal.ps1 post-build step fails to copy on this box:
+    # vcpkg dependency DLLs + project-built lib DLLs (e.g. zlib-ng, which zone.exe needs).
+    dll_files = list((SERVER_DIR / "vcpkg" / "vcpkg-export-x64" / "installed" / "x64-windows" / "bin").glob("*.dll"))
+    dll_files += [p for p in (SERVER_DIR / "build" / "libs").rglob("*.dll") if "RelWithDebInfo" in p.parts]
+    for dll in dll_files:
+        shutil.copy2(dll, RUN_DIR / dll.name)
+    if dll_files:
+        say(f"  copied {len(dll_files)} runtime DLLs (vcpkg + built libs)")
 
     say("[green]assemble complete.[/green] Next: python .bin/control_server.py start")
 
@@ -169,14 +173,21 @@ def cmd_start(args: argparse.Namespace) -> None:
             say(f"[yellow]skip {proc}: {exe.name} not built[/yellow]")
             continue
         log = LOG_DIR / f"{proc}.log"
+        if proc == "shared_memory":
+            # One-shot loader: MUST fully populate shared/ before world/zone start.
+            say("  running [green]shared_memory[/green] to completion (loads items/spells)...")
+            with open(log, "w", encoding="utf-8") as fh:
+                subprocess.run([str(exe)], cwd=str(RUN_DIR), stdout=fh, stderr=subprocess.STDOUT)
+            say("  shared_memory done.")
+            continue
         flags = 0
         if IS_WINDOWS:
             flags = subprocess.CREATE_NEW_PROCESS_GROUP | 0x00000008  # DETACHED_PROCESS
+        cmd = [str(exe), LAUNCHER_NAME] if proc == "eqlaunch" else [str(exe)]
         with open(log, "w", encoding="utf-8") as fh:
-            subprocess.Popen([str(exe)], cwd=str(RUN_DIR), stdout=fh, stderr=subprocess.STDOUT, creationflags=flags)
+            subprocess.Popen(cmd, cwd=str(RUN_DIR), stdout=fh, stderr=subprocess.STDOUT, creationflags=flags)
         say(f"  started [green]{proc}[/green]  -> {log.relative_to(REPO_ROOT)}")
-        # shared_memory must finish loading before world/zone; give the chain a beat.
-        time.sleep(3 if proc == "shared_memory" else 1.5)
+        time.sleep(1.5)
     say("[green]start issued.[/green] Check: python .bin/control_server.py status")
 
 

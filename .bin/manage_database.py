@@ -30,6 +30,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tarfile
@@ -42,6 +43,14 @@ MARIADB_BIN = REPO_ROOT / "mariadb" / "bin"
 MY_INI = REPO_ROOT / "mariadb" / "my.ini"
 CONFIG = REPO_ROOT / "server" / "eqemu_config.json"
 REPORTS = REPO_ROOT / ".reports"
+BOOTSTRAP_DIR = REPO_ROOT / "db" / "bootstrap"
+CONFIG_DIR = REPO_ROOT / "config"
+# Template -> live-file rendering for `bootstrap` (real files stay gitignored; templates tracked).
+CONFIG_RENDER = {
+    CONFIG_DIR / "mariadb.template.ini": REPO_ROOT / "mariadb" / "my.ini",
+    CONFIG_DIR / "eqemu_config.template.json": REPO_ROOT / "server" / "eqemu_config.json",
+    CONFIG_DIR / "login.template.json": REPO_ROOT / "server" / "login.json",
+}
 
 try:
     from rich.console import Console
@@ -192,6 +201,45 @@ def cmd_query(args: argparse.Namespace) -> None:
     say(_run_sql(info, args.sql, info["db"]).rstrip())
 
 
+def cmd_repair(args: argparse.Namespace) -> None:
+    info = _conn_info(args)
+    exe = MARIADB_BIN / "mysqlcheck.exe"
+    argv = [str(exe), f"--defaults-file={MY_INI}", "-h", info["host"], "-P", info["port"], "-u", info["user"]]
+    if info["password"]:
+        argv.append(f"-p{info['password']}")
+    argv += ["--auto-repair", "--databases", "mysql", info["db"]]
+    say(f"[bold]Repairing[/bold] mysql + {info['db']} (auto-repair crashed tables)...")
+    res = subprocess.run(argv, capture_output=True, text=True)
+    bad = [ln for ln in res.stdout.splitlines() if ln.strip() and "OK" not in ln]
+    say("\n".join(bad[-20:]) if bad else "[green]all tables OK.[/green]")
+
+
+def cmd_bootstrap(args: argparse.Namespace) -> None:
+    """Fresh-DB setup: render config templates + apply custom bootstrap SQL (users, launcher)."""
+    info = _conn_info(args)
+    say("[bold]Rendering config templates[/bold]")
+    for tmpl, dest in CONFIG_RENDER.items():
+        if not tmpl.exists():
+            say(f"[yellow]  missing template {tmpl.name}[/yellow]")
+            continue
+        if dest.exists() and not args.force:
+            say(f"[dim]  keep existing {dest.name} (use --force to overwrite)[/dim]")
+            continue
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(tmpl, dest)
+        say(f"  {tmpl.name} -> {dest}")
+    say("[bold]Applying bootstrap SQL[/bold]")
+    for sql in sorted(BOOTSTRAP_DIR.glob("*.sql")):
+        db = None if "user" in sql.name.lower() else info["db"]
+        say(f"  {sql.name} [{db or 'server'}]")
+        with open(sql, "rb") as fh:
+            res = subprocess.run(_mysql_argv(info, db), stdin=fh, capture_output=True, text=True)
+        if res.returncode != 0:
+            say(f"[red]    failed:[/red] {res.stderr.strip()[:200]}")
+            raise SystemExit(1)
+    say("[green]bootstrap complete.[/green] Next: python .bin/control_server.py start")
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description="Thorne-EQ database operator.")
     p.add_argument("--database", help="database name (default: from config or 'quarm')")
@@ -216,6 +264,10 @@ def main() -> None:
     pq = sub.add_parser("query", help="Run a SQL statement.")
     pq.add_argument("sql", help="SQL to execute")
     pq.set_defaults(func=cmd_query)
+    sub.add_parser("repair", help="Auto-repair crashed MyISAM/Aria tables.").set_defaults(func=cmd_repair)
+    pbo = sub.add_parser("bootstrap", help="Render config templates + apply custom bootstrap SQL (users, launcher).")
+    pbo.add_argument("--force", action="store_true", help="overwrite existing config files")
+    pbo.set_defaults(func=cmd_bootstrap)
 
     args = p.parse_args()
     args.func(args)
