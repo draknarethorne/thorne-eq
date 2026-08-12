@@ -5,6 +5,7 @@ REM   control_server.bat assemble          (build/refresh the run directory)
 REM   control_server.bat start             (start shared_memory -> loginserver -> world -> zone)
 REM   control_server.bat status            (show process/port status)
 REM   control_server.bat stop              (stop all server processes)
+REM   control_server.bat shutdown          (clean full shutdown: chain + MariaDB graceful)
 REM   control_server.bat mariadb           (start portable MariaDB in the foreground)
 
 setlocal EnableDelayedExpansion

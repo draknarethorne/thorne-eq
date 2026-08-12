@@ -35,7 +35,8 @@ control_server.bat mariadb      REM start portable MariaDB (foreground)
 control_server.bat assemble     REM link Maps/quests, copy configs+assets into the run dir
 control_server.bat start        REM shared_memory -> loginserver -> world -> zone
 control_server.bat status       REM what's up
-control_server.bat stop         REM stop all server processes
+control_server.bat stop         REM stop the server chain (MariaDB keeps running)
+control_server.bat shutdown     REM clean full shutdown: chain + graceful MariaDB (mysqladmin)
 ```
 
 ### manage_database — DB operator
@@ -96,3 +97,6 @@ See `.docs/MULTI-CLASS-DESIGN.md` and `.docs/ROADMAP.md` for the design these to
 - Read-only auditors are safe anytime; operators mutate — read their `--help` first.
 - Never commit secrets; pass DB passwords via env vars, not files.
 - Treat `.tmp/` and `.reports/` as disposable artifacts.
+
+Full script conventions (naming, argument style, documentation tiers, the
+new-script checklist) live in [STANDARDS.md](STANDARDS.md).

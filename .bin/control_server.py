@@ -233,6 +233,25 @@ def cmd_mariadb(_args: argparse.Namespace) -> None:
     subprocess.run([str(mysqld), f"--defaults-file={my_ini}", "--console"], check=False)
 
 
+def _mariadb_stop() -> bool:
+    """Gracefully shut down MariaDB via mysqladmin (clean = avoids crashed MyISAM tables)."""
+    admin = MARIADB_DIR / "bin" / "mysqladmin.exe"
+    if not admin.exists():
+        return False
+    res = subprocess.run(
+        [str(admin), f"--defaults-file={MARIADB_DIR / 'my.ini'}", "-u", "root", "shutdown"],
+        capture_output=True, text=True,
+    )
+    return res.returncode == 0
+
+
+def cmd_shutdown(args: argparse.Namespace) -> None:
+    """Clean full shutdown: stop the server chain, then gracefully stop MariaDB."""
+    cmd_stop(args)
+    say("[bold]Shutting down MariaDB (graceful)[/bold]")
+    say("[green]MariaDB shut down cleanly.[/green]" if _mariadb_stop() else "[yellow]MariaDB not running / mysqladmin unavailable.[/yellow]")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Thorne-EQ server control.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -241,7 +260,8 @@ def main() -> None:
     p_start = sub.add_parser("start", help="Start the server process chain.")
     p_start.add_argument("procs", nargs="*", help=f"processes (default: {' '.join(PROCESS_ORDER)})")
     p_start.set_defaults(func=cmd_start)
-    sub.add_parser("stop", help="Stop all server processes.").set_defaults(func=cmd_stop)
+    sub.add_parser("stop", help="Stop all server processes (leaves MariaDB running).").set_defaults(func=cmd_stop)
+    sub.add_parser("shutdown", help="Clean full shutdown: stop server chain + MariaDB gracefully.").set_defaults(func=cmd_shutdown)
     sub.add_parser("status", help="Show process/port status.").set_defaults(func=cmd_status)
     args = parser.parse_args()
     args.func(args)
