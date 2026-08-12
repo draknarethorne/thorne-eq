@@ -26,6 +26,7 @@
 | Longer buff durations | — | Soon | 3 | Rule multiplier |
 | Reagent-lite utility casting | QoL | Soon | 3 | Reduce pearl/bone-chip friction for baseline buffs/ports |
 | Out-of-combat recovery clickies | Diablo/UO | Soon | 3 | Reusable bandages/food-tonics for downtime smoothing |
+| Friends-and-family helper lane | UO | Later | 4 | Not GM power; a bounded assist mode for trusted private-server play |
 | Pet auto-attack + hold/guard tuning | THJ | Soon | 3/4 | Small-group + AFK-safe |
 | Primary pet + swarm/ward companion model | THJ | Soon | 3/4 | Uses existing swarm-pet lane; avoids breaking the one-primary-pet client model |
 | Multiple simultaneous pets (2-3 per controller) | THJ | Later | 4/5 | Small-group force-multiplier; needs pet-cap + control UX audit |
@@ -39,6 +40,8 @@
 | Item | Src | Priority | Phase | Notes |
 | --- | --- | --- | --- | --- |
 | Pet stance polish (guard/follow/taunt presets) | THJ | Soon | 3 | Mostly server logic + existing pet commands |
+| Domestic / housed pet state | UO | Soon | 4 | Safe non-hostile house pets after release / conversion state |
+| Stable claim one-at-a-time | UO | Later | 4 | QoL for pet-heavy players; avoid all-or-nothing retrieval |
 | Suspend-like storage for more pet archetypes | EQ live | Later | 4 | Current code has one `SuspendedMinion`; extending that is real work |
 | Totem/ward pseudo-pets | Diablo | Soon | 3 | Use immobile or timed NPC helpers instead of full permanent pets |
 | Treasure-goblin escort pet / mule pet | UO/Diablo | Icebox | 6 | Cute, but likely UI-heavy and messy for inventory ownership |
@@ -51,7 +54,9 @@
 | Nexus blessing NPC (MGB-style) | Quarm | Soon | 3 | Baseline buffs; not raid-trivializing |
 | Open travel (spires/translocators/stones) | — | Soon | 3 | Remove porter dependency |
 | Consolidated Nexus hub | — | Soon | 3 | Re-attune + buffs + travel in one |
+| Featherstone-style travel clicky | UO | Soon | 3 | Personal Nexus recall stone / potion with cooldown, ownership, and bind rules |
 | Bazaar/Nexus attunement brokers | THJ (borrow) | Soon | 2/3 | Class declaration, role swap, respec, and affinity unlocks via NPC flows |
+| Player-city style service hub | UO | Soon | 3 | One friendly city/Nexus hub that concentrates travel, vendors, quests, and reset services |
 | Reagent vendors / exchange NPCs | QoL | Soon | 3 | Smooth friction for buffs, ports, pet toys, arrows |
 | Daily or weekly bounty board | Diablo/UO | Later | 4 | Quest scripts + rotating targets + token payouts |
 | Expedition-lite challenge rings | Diablo | Later | 5 | Ring an object, spawn a tuned wave, earn small-group rewards |
@@ -65,6 +70,7 @@
 | Bigger bags + weight reduction | QoL | Later | 4 | Trivial DB items |
 | Giant-size 10-slot bag pass | QoL | Soon | 3 | Safe lane: `BagSlots` already supports 10; avoid inventing >10-slot client UI |
 | Quest-supplied consumable packs | UO | Soon | 3 | Bundles of food, bandages, arrows, reagents, pet consumables |
+| House placable supply depot | UO | Soon | 4 | Refillable or charge-based house chest for baseline consumables/materials |
 | Global loot table pass for low/mid content | Diablo | Soon | 3/4 | Use `global_loot` + `lootsim` to add chase drops broadly |
 | Ground supply caches / loot chests | UO | Soon | 4 | Reuse groundspawn/object flow for static or timed caches |
 | Treasure-runner NPCs | Diablo | Later | 4 | Flee/aggro AI + juicy loottables; high fun-per-code |
@@ -83,6 +89,7 @@
 | Expanded/opened AAs | THJ | Icebox | 6 | Verify Quarm coverage first |
 | Equalizer-as-AA spend model | Diablo/RIFT | Later | 5/6 | Zeal could make it feel like AA spending without trusting the client |
 | Attunement milestone quests | UO/AC | Soon | 3/4 | Unlock secondary perks through repeatable progression tasks |
+| Starter boon package | UO | Soon | 3 | Better new-character inventory, travel, and recovery baseline |
 
 ## Admin / GM
 
@@ -92,6 +99,7 @@
 | Buffed quest xp/rewards | — | Later | 4 | Quest scripts + rules |
 | Loot simulation tooling pass | EQEmu | Soon | 3 | Build around existing `#lootsim` to validate custom drop economics |
 | Live feature flags for experiments | — | Soon | 3 | `rule_values` + `data_buckets` + custom tables for reversible rollout |
+| Activity / event log for players | UO | Later | 5 | Surface notable world events, kills, and service notices in a player-readable way |
 
 ## NPC Logic & World Simulation
 
@@ -101,6 +109,7 @@
 | Combat archetype packages | Diablo | Soon | 4 | Reusable melee/caster/summoner brains via aggro + spell choice tuning |
 | Flee/retreat/assist behavior pass | EQEmu | Soon | 4 | Tune `CheckAggro`, flee logic, and special abilities for livelier fights |
 | Bazaar/Nexus service personalities | UO | Soon | 3 | Merchants/attuners/clerks with persistent dialogue state |
+| Vendor / service locator | UO | Later | 5 | World or hub UI/NPC that helps players find merchants and services quickly |
 | Procedural chatter from server state | AI-lite | Later | 5 | Rule-based templated lines keyed by zone, faction, and events |
 | External AI dialogue sandbox | AI | Icebox | 6 | Flavor only, never authority or combat logic; requires strict guardrails |
 

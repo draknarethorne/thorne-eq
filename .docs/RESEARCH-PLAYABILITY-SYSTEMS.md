@@ -30,6 +30,65 @@
 | Runtime AI-driven NPC dialogue/combat | Red | external service boundary | Flavor only if ever; never server authority early |
 | Thorne patcher / launcher | Yellow/Red | separate utility / installer | Better as optional later distribution layer |
 
+## RunUO / Featherstone case study (2026-08-12 diff passes)
+
+The strongest proof-of-fun reference is not a public server at all — it is the
+old `C:\RunUO\Development` tree compared against `C:\RunUO\UO2.3\2.3` and the
+older `C:\RunUO\Base` scripts. That comparison shows a consistent design pattern:
+
+- reduce repetitive gather friction,
+- improve small-group independence,
+- add travel convenience,
+- preserve danger while softening grind,
+- and move quality-of-life into world objects, quests, and NPC services.
+
+### Concrete systems confirmed in the code
+
+- **Placable refillable supply infrastructure**
+  - `Scripts/Customs/Featherstone/SupplyChest.cs`
+  - `Scripts/Customs/Featherstone/FeatherContainer.cs`
+  - The chest is not just loot. It is a **movable house object** that fills with
+    huge stacks of crafting/gathering supplies, has upgrade states, and either
+    **resets** or **deletes** on a timer depending on state.
+- **Personal travel stone / city recall item**
+  - `Scripts/Customs/HomeStone.cs`
+  - Ownership, markable home location, cooldown, blessed item semantics.
+  - `ServerInfo.cs` also confirms every new player got a **Featherstone** travel item.
+- **Player-city hub conversion**
+  - `Scripts/Customs/Decorate Magincia.cs`
+  - `Data/Magincia/*`
+  - Release notes explicitly say Magincia references were changed over to Featherstone
+    and that world decoration/buildings/vegetation were added.
+- **Pet-friendly quality-of-life**
+  - Release notes confirm: domestic-pet state after release, non-domestic cleanup,
+    reduced aggro on taming, increased taming range, single-pet claim from stables,
+    follower counting fixes, and young-player pet-heal allowances.
+- **Quest + loot smoothing**
+  - Release notes confirm unique drops on quest monsters, custom Featherstone quests,
+    updates to random quest-giver equipment, better chest contents, and boosted early
+    inventory/gold for new characters.
+- **Player-visible service UI / social QoL**
+  - `ServerInfo.cs` advertises global chat, activity logs, server status, vendor-finder
+    travel, and `[Where]` location visibility for all players.
+
+### Important caveat
+
+I **did not yet find** a dedicated `Moderator` access level or a single obvious
+"take less damage / super-powered pets" switch. `Development/Source/Mobile.cs`
+still exposes the standard enum (`Player`, `Counselor`, `GameMaster`, `Seer`,
+`Administrator`, `Developer`, `Owner`). The friendly-play outcomes may instead be
+distributed across:
+
+- young-player/account logic,
+- follower/pet-slot tuning,
+- pet behavior changes,
+- loot/progression smoothing,
+- spell and duration adjustments,
+- and content/hub conveniences.
+
+If we want the exact implementation, the next pass should be a purpose-built diff of
+`Development/Source` against the closest original RunUO source snapshot.
+
 ## Concrete recommendations
 
 ### 1) Pets: fake “multiple pets” before building true multiple pets
@@ -64,6 +123,8 @@
 - Add more **10-slot**, **Giant-size**, **80-100% WR** bags.
 - Gate better bags by quests, factions, attunement milestones, or self-found achievements.
 - Add role-specific utility bags (reagent satchel, pet-tool satchel, forager pack) via normal item data.
+- Add **house supply chests / depot clickies** inspired by Featherstone: not more bag UI,
+  but renewable access to baseline materials so players spend less time restocking.
 
 ### Avoid early
 
@@ -85,6 +146,8 @@ The server already gives you excellent hooks:
 - Add **supply caches** and **treasure chests** to grind loops.
 - Add **treasure-runner NPCs** that flee, kite, or call help.
 - Create **pre-authored item families** (same model, different tuned stats / proc / clicky) instead of true random affixes.
+- Add **quest / house-linked refill caches** as a controlled, opt-in anti-grind system
+  instead of forcing gather loops for basic upkeep.
 
 ### Why pre-authored beats fully random early
 
@@ -106,6 +169,8 @@ Best current seams:
 - Role packages: ambusher, runner, summoner, protector, priest, pack leader.
 - Context reactions: flee at HP thresholds, call nearby allies, prioritize healers, prefer weak targets, reset to guard spots.
 - Zone flavor state: dialogue or availability changes based on time, flags, local kills, or faction.
+- Service-NPC state: vendor finder, attunement broker, supply quartermaster, travel clerk,
+  and bounty board NPCs that present the world as a friendly operating hub.
 
 ### External AI later, maybe
 
@@ -130,6 +195,7 @@ The local Zeal repo shows:
 
 - Start with NPC / item / command-driven flows.
 - Add Zeal UI later as a convenience layer on top of the same server APIs/rules.
+- Mirror the Featherstone pattern: **world object / NPC first, UI second**.
 
 ### 6) Patcher / launcher: optional delivery layer, not a prerequisite
 
@@ -145,11 +211,13 @@ It should **not** be required to prove the server design.
 
 1. **Stock server + client proof** — no gameplay changes yet.
 2. **NPC-driven attunement flows** — declaration, role swap, respec.
-3. **Small-group sustain pass** — regen, duration, consumable packs, basic pet polish.
-4. **Loot refresh pass** — low/mid tables, supply caches, treasure runners.
-5. **Rule-based NPC intelligence pass** — smarter encounters and service NPCs.
-6. **Zeal convenience layer** — readout first, configuration second.
-7. **Long-tail experiments** — multiple permanent pets, patcher, pseudo-affixes, external AI flavor.
+3. **Featherstone-style convenience layer** — travel clicky, starter kits, supply caches,
+   player-help hub services.
+4. **Small-group sustain pass** — regen, duration, consumable packs, basic pet polish.
+5. **Loot refresh pass** — low/mid tables, supply caches, treasure runners.
+6. **Rule-based NPC intelligence pass** — smarter encounters and service NPCs.
+7. **Zeal convenience layer** — readout first, configuration second.
+8. **Long-tail experiments** — multiple permanent pets, patcher, pseudo-affixes, external AI flavor.
 
 ## Repo placement recommendation
 
