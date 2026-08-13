@@ -7,11 +7,15 @@
 
 ## Guiding principle
 
-**Prove the multi-class system and its playability before anything else.** Sustain,
-loot, travel, AA, GM tiers, and Diablo-style polish are all secondary. If we can't make
-a curated multi-class character *fun and playable* on the TAKP/Quarm client, none of the
-bells and whistles matter. Every phase ships in a small, testable chunk behind a feature
-flag, with an explicit **exit test**.
+**Multi-class is the spine; the identity foundation is what makes it *Thorne-EQ*.**
+Proving a curated multi-class character is *fun and playable* on the TAKP/Quarm client
+remains the make-or-break test. THJ analysis has **design-validated** that a curated
+hybrid is viable and fun; the remaining unknown is **client-validation** — whether the
+classic Mac/Quarm client will scribe/memorize/cast server-granted cross-class spells
+(the Phase 1 spike). In parallel, the **identity foundation** — the anti-EverGrind feel
+and the Renown/Momentum/Death meta layer — is now a co-priority to design well and lay
+schema for early, because it is the differentiator, not a bolt-on. Every phase ships in a
+small, testable chunk behind a feature flag, with an explicit **exit test**.
 
 ## Phase map (at a glance)
 
@@ -21,7 +25,7 @@ flag, with an explicit **exit test**.
 | 1 | Multi-Class Spike | Prove cast-time cross-class access works on this client | Next |
 | 2 | Declaration MVP | Earned secondary classes via item, combat-locked swap | Planned |
 | 3 | Playability Tuning | Make a 2-3 hybrid group actually fun & sustainable | Planned |
-| 4 | Casual Enablers | Low-pop QoL: bags, xp/AA, drops, GM tiers, AFK | Planned |
+| 4 | Identity Foundation & Casual Enablers | Renown/Momentum/Death meta layer, anti-grind QoL, AFK-to-50, discoverability | Planned |
 | 5 | Equalizer Layer | Optional point-buy caps/tiers on top of declaration | Optional |
 | 6+ | Bells & Whistles | Diablo affixes, AA trees, Zeal UI, archetypes | Icebox |
 
@@ -74,6 +78,8 @@ Turn the spike into a real, data-driven, curated system — no cap math yet.
 - [ ] Clicky "Tome of the {Class}" item to declare/activate a secondary (quest-granted)
 - [ ] **Swap-lock**: reject role change while in combat; require safe zone or Soul Shrine
 - [ ] Feature flag + per-character enable for safe testing
+- [ ] **Lay identity-foundation schema early** (non-blocking): `data_buckets` Renown counters
+      + a `last_active_action` stamp, so the Phase 4 meta layer has a home before it's needed
 
 **Exit test:** a character declares a secondary via item, scribes/casts its spells within
 curated limits, and cannot swap mid-combat.
@@ -97,17 +103,38 @@ without collapsing role identity. Iterative; driven by playtest feel.
 
 ---
 
-## Phase 4 — Casual Enablers (low-pop quality of life)
+## Phase 4 — Identity Foundation & Casual Enablers (the differentiator)
 
-Cheap, high-satisfaction wins for a small population. Mostly data/rule changes.
+The layer that makes Thorne-EQ *not EverGrind*: the two-meter meta system plus the
+anti-grind QoL that removes wasted time while keeping earned tension. Schema is laid
+early (Phase 2); this phase activates and tunes it. See `BACKLOG.md` sections
+**Renown, Momentum & Death**, **Anti-EverGrind Time-Saver Pass**, and **Progression & AA**.
 
-- [ ] Bigger bags + more weight reduction; better starting gear
-- [ ] XP/AA rate tuning; buffed quest xp/rewards
+**Identity foundation (the unique core):**
+
+- [ ] **Renown** (permanent contribution meter) drives the reward curve (+XP/kill, better/more loot, titles, daily tier)
+- [ ] **Momentum** (volatile kill streak) with escalating temp buffs + volatile title; resets on death
+- [ ] **Active-participation gate**: AFK levels to 50, but Renown/Momentum accrue only on player actions (pet auto-attack doesn't count)
+- [ ] **Humane death**: keep items; sting via XP debt + Momentum loss + short recovery; corpse-to-bind/relocate (no deep-CR misery)
+- [ ] Server-wide earned day buffs + daily login rewards; **chat-first comms** (login summary + event messages)
+- [ ] **Discoverability**: Herald NPC + Adventurer's Handbook (in-game patch notes) + one delta page
+
+**Anti-EverGrind time-savers (attack the biggest wasters):**
+
+- [ ] Base run-speed floor (**cap-aware**); let SoW/JBoots/Selo's stack to the safe ceiling
+- [ ] Transport runes + Gate-for-all via Soulbinder (grant the effect, not the class spell)
+- [ ] Kill-based faction paths alongside existing quests (no more grind-by-1)
+- [ ] AFK-to-50 loop: pet-sustained overnight XP/AA with con/leash/pet-present gates; resummon-on-death proc
+
+**Casual enablers (low-pop QoL):**
+
+- [ ] Bigger bags + weight reduction; better starting gear; starter boon package
+- [ ] XP/AA level-band curve (easy ≤50, steepen 50+); buffed quest xp/rewards
 - [ ] Better low-level static drops (kill "always Rusty")
-- [ ] AFK xp/AA farming support (auto-combat, pet guard)
 - [ ] Tiered GM roles for trusted friends (respawn named, trigger quests, restricted powers)
 
-**Exit test:** a new casual character reaches mid-game noticeably faster, with less grind friction.
+**Exit test:** a new casual character reaches mid-game noticeably faster; Renown/Momentum
+read through chat feel meaningful; death stings without item loss or a deep-dungeon corpse trek.
 
 ---
 

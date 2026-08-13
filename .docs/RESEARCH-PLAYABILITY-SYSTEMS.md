@@ -126,6 +126,211 @@ The Featherstone philosophy was distributed through the whole game loop:
 That is the direct analogue for Thorne-EQ: if we want it to feel great for friends and a
 small group, we should expect to tune **many small seams**, not chase a single silver bullet.
 
+## Platinum pass synthesis (hotspot-by-hotspot)
+
+The focused report at `.tmp/runuo_platinum_pass.txt` reinforces the same conclusion,
+but with clearer implementation patterns we can port to EQ immediately.
+
+### What changed most in RunUO and why it matters
+
+- `Mobiles/PlayerMobile.cs` (very high churn)
+  - Heavy pet/follower quality-of-life and inventory/economy touchpoints.
+  - Suggests that "friendly shard" feel came from many player-loop adjustments,
+    not one privileged role toggle.
+- `Misc/CharacterCreation.cs`
+  - Explicit front-loading: big starter cash/bank injections, travel helpers,
+    and pre-packed progression convenience.
+- `Mobiles/Vendors/BaseVendor.cs`
+  - Vendor behavior tuned toward availability and practical trading outcomes.
+- `Mobiles/Vendors/NPC/AnimalTrainer.cs` + `Skills/AnimalTaming.cs`
+  - Pet-capacity, claim flow, taming friction, and stable economics were all tuned.
+- `Misc/LootPack.cs` + `ChampionSpawn.cs`
+  - Reward frequency and payout pacing shifted to reduce dead-time and increase momentum.
+
+### High-confidence patterns to copy (not code, just design intent)
+
+1. **Front-load onboarding without trivializing progression**
+   - RunUO used aggressive starter grants (huge gold/bank checks). For EQ, use a
+     bounded equivalent: meaningful startup capital + practical supplies, not raid-grade power.
+2. **Move friction from routine actions to optional goals**
+   - Spell access, travel, pet management, and restocking should be easy.
+   - Long-tail prestige should remain in quests, camps, and social objectives.
+3. **Treat vendors/NPCs as service infrastructure**
+   - A low-pop shard needs NPC systems that partially emulate missing player economy.
+4. **Favor reversible economic levers**
+   - Adjust with tables/rules and scheduled NPC inventories, not hardcoded one-way gifts.
+
+### Anti-patterns to avoid in EQ
+
+- Do **not** copy extreme raw-currency starts (e.g., giant direct bank grants) 1:1.
+- Do **not** bypass class identity with universal spell access shortcuts.
+- Do **not** rely on client-side authority for anything economic or progression-critical.
+
+## EQ translation pack from the platinum pass
+
+### A) Starter economy kit (server-side, data-driven)
+
+Implement at character onboarding NPC (or first-login claim):
+
+- **Starter coin grant**: enough for spells/food/basic tools through early bands.
+- **Bank seed**: a smaller reserve cushion to reduce early failure spirals.
+- **Starter supplies**: food/water, bandages/reagents by class lane, basic ammo.
+- **Travel starter**: cooldown-limited Nexus recall consumable or charge item.
+
+Balance levers:
+
+- one-time per character,
+- optional account-age rules,
+- claim-flag in `data_buckets`,
+- per-class and per-level-band values from DB tables.
+
+### B) WR bag ladder (practical, not luxury)
+
+Use the user-requested stepped model as the baseline shape:
+
+- **Tier 1** (newbie): modest WR + practical slots.
+- **Tier 2** (journeyman): improved WR from early quests/faction.
+- **Tier 3** (specialist): high WR but still effort-gated.
+
+Implementation posture:
+
+- stay within stock bag slot constraints,
+- gate upgrades via achievements/quest completions,
+- keep top-end prestige bags outside starter lane.
+
+### C) Spell set bundles (class + level band)
+
+From the `CharacterCreation.cs` pattern, EQ equivalent should be:
+
+- purchasable class bundles (`1-20`, `21-40`, `41-50`) as satchels/tomes,
+- optional subsidized pricing for first character per account,
+- strict class whitelist for contents.
+
+This preserves the spell-chain ritual (scribe/use) while removing vendor crawl overhead.
+
+### D) Pseudo-player vendor economy (for low-pop reality)
+
+Define a curated NPC market layer that simulates player supply for baseline goods:
+
+- rotating inventory pools for crafted staples,
+- dynamic restock timers,
+- price bands with caps/floors,
+- optional faction discounts,
+- sink hooks (fees, repair, reroll tokens, travel permits).
+
+Guardrails:
+
+- no best-in-slot raid items,
+- no infinite arbitrage loops,
+- no bypass of attunement/progression gates.
+
+### E) Pet helper quality lane
+
+Instead of true multi-primary pets now:
+
+- increase convenience via stances, claim flow, and summon-helper lanes,
+- improve survivability/command responsiveness,
+- keep one-primary-pet authority model intact.
+
+## Recommended staged rollout (platinum-derived)
+
+1. **Immediate**: starter economy kit, Tier 1 WR bags, spell bundles `1-20`, travel consumable.
+2. **Soon**: Tier 2 bag path, spell bundles `21-40/41-50`, vendor market v1, pet QoL pass.
+3. **Later**: market dynamic pricing v2, Tier 3 specialist bags, advanced helper summons.
+
+Rollback conditions:
+
+- inflation spike beyond target range,
+- major vendor-arbitrage exploit,
+- starter kits measurably suppressing early-zone engagement.
+
+Success metrics:
+
+- time-to-functional-character (spells, supplies, movement) drops significantly,
+- early retention and session length improve,
+- platinum velocity remains within configured bounds,
+- no reduction in class identity compliance checks.
+
+## Adaptation concept catalog — what was actually changed (the gems)
+
+This is the payoff of the analysis: the concrete Featherstone changes, what each one
+*accomplishes*, and whether the **concept** carries to Thorne-EQ. Two kinds of change
+matter — new systems you authored, and small edits to stock code that are easy to miss
+but carry real gameplay weight.
+
+### A. New systems authored (dev-only files)
+
+| System | What the code does | EQ concept | Verdict |
+| --- | --- | --- | --- |
+| Supply chest (`SupplyChest`, `FeatherContainer`, `FeatherChest`) | Placeable object that refills bulk gather/craft supplies; timed reset/delete | Renewable supply depot / house cache to kill restock grind | Adapt |
+| Home stone (`HomeStone`) | Personal bind + recall item; ownership, cooldown, blessed | Personal Nexus-recall clicky with cooldown/bind rules | Adopt |
+| Elementalist spell line (`FrostBolt`, `FrostNova`, custom spellbook/scroll/gump) | Whole custom spell school + book/scribe UI | Curated custom spell family gated by class/affinity | Adapt |
+| Featherstone service NPCs (Banker, Greeter, Guard, Quester, Ranger, Vendor, PrinceScott) | Named hub NPCs providing bank, greet, guard, quests, vending | NPC-driven service hub (attunement broker, quartermaster, clerk) | Adopt |
+| Ops/logging engines (`AccountLog`, `ActivityLog`, `ChatLog`, `Logs`, `LogRoller`, `ServerInfo`) | Structured logs, activity feed, server-status readout | Operator observability + player-facing service notices | Adapt |
+| Starter/gift items (`Gifts/*`, `SupplyBags`, `Stones`, `WebStone`) | Seasonal grants, starter bags, utility stones | Starter boon package + utility clickies | Adapt |
+
+> Note: the large `Customs/Mondain's Legacy` (834), `Xml Spawner` (94), and `Neruns Distro` (46)
+> trees are **imported distributions**, not authored design — treat as baseline, not intent.
+
+### B. Small adaptations to stock code (easily-missed, high-impact)
+
+| Area | Change (before → after) | What it accomplishes | EQ concept | Verdict |
+| --- | --- | --- | --- | --- |
+| Field spell durations | FireField `15→35`, PoisonField `3→15`, ParalyzeField `3.0→6.0`, VengefulSpirit `+10→+25` | Longer control/DoT windows help small groups | Rule-tuned spell durations for group viability | Adapt |
+| Summon follower cost | `ControlSlots 2→1`; follower checks `+2→+1` across SummonCreature/Kirin/elementals/BladeSpirits/EnergyVortex/Daemon | Players field more/utility pets cheaply | Cheaper swarm/utility summons vs one primary pet | Adapt |
+| Duel restriction removal | Removed ConPVP "sudden death" `CheckCast` in Cure/Heal/Str/Cunning/Agility/GreaterHeal/CleanseByFire | Strips PvP-only casting friction | Don't port PvP gates that don't fit PvE shard | Skip (context-specific) |
+| Timing normalization | `Core.ML ? 10 : 12 → 12` across many spells | Consistent cast/recovery regardless of expansion flag | Deterministic spell timing constants | Adapt |
+| Buff vs curse duration split | `GetDuration` → `GetBonusDuration` / `GetCurseDuration` | Separate tuning for buffs vs debuffs | Independent buff/debuff duration levers | Adopt |
+| Stable capacity | AnimalTrainer max `2/3/4/5 → 10/11/12/13`, wider claim range, single-pet claim | Pet-heavy QoL without micromanagement | Larger stable + one-at-a-time claim | Adapt |
+| Housing cost | Customization `10000→100`, per-component `500→50` | Near-free player housing customization | Cheap personal/base customization sink | Adapt |
+| Recall cost | Recall via runebook charge (no mana) | Travel without mana tax | Charge/consumable-based travel | Adopt |
+| Skill training | TeachEntry always teaches, skips gold | Free early skill access | Subsidized starter training | Adapt |
+| Barding difficulty | Uses current `Hits/Stam/Mana` vs max | Easier to bard damaged targets | Situational skill-difficulty tuning | Consider |
+| Vendor activity | `IsActiveBuyer/Seller` require `SBInfos.Count > 0` | Stops empty vendors erroring/interacting | Vendors only trade with real stock lists | Adopt |
+| Item policy | TreasureMap `LootType.Blessed` removed | Maps become droppable/lootable | Explicit protected/risky/volatile item tiers | Adapt |
+| Spell gating | ArcanistSpell requires epic quest completion | Locks a school behind a quest | Affinity/quest-gated spell families | Adopt |
+| Command access | `Where` Counselor→Player; `Cast`/`Client` Counselor→GameMaster | Players self-locate; tighten power cmds | Player-facing utility commands, tight power cmds | Adapt |
+| Detection threshold | Hidden-check `AccessLevel.Player → GameMaster` in traps/effects/switches | Only true GMs bypass, not counselors | Precise staff-tier boundaries | Adapt |
+| Loot resilience | LootPack `IsInTokuno` null-safe (no mobile) | Custom loot flows won't crash | Defensive null-safety in custom loot | Adopt |
+| Starter economy | CharacterCreation newbie gold + bank checks | Front-loaded startup capital | Bounded starter coin/bank seed | Adapt (bound it) |
+
+### C. Server-support / identity adaptations
+
+| Change | What it accomplishes | EQ concept | Verdict |
+| --- | --- | --- | --- |
+| `Console.WriteLine → ConsoleLog/AccountLog` everywhere | Centralized, categorized logging | Structured server logging standard | Adopt |
+| `ServerName = "Featherstone"`, email/crash config | Server identity + crash/ops routing | Shard identity + ops alerting | Adapt |
+| Activity/chat logs + `ServerInfo` readout | Player-visible world/service state | Player service notices + status board | Adapt |
+
+### Carry-forward shortlist (highest concept value for EQ)
+
+1. Personal recall clicky + NPC service hub (travel + services in one place).
+2. Renewable supply depot to kill restock grind.
+3. Cheaper/utility summons layered on one primary pet.
+4. Independent buff vs debuff duration tuning.
+5. Explicit item-policy tiers (protected/risky/volatile).
+6. Quest/affinity-gated custom spell families.
+7. Structured logging + player-facing service notices.
+
+### Explicitly skip / re-scope for EQ
+
+- PvP/duel-context removals (Featherstone-specific, not relevant to a PvE shard).
+- Raw currency mega-grants (adopt the *intent*, not the 50k/1M magnitudes).
+- Imported distro bulk content (baseline, not design signal).
+
+## Methodology (brief)
+
+The catalog above is grounded in a diff of `Development/Scripts` against `UO2.3` and `Base`
+baselines, covering both edited common files and added/removed files (dev-only content).
+Custom work lives in `Scripts` (RunUO `Source` is core engine and not script-populated), so
+script-layer coverage is complete for concept extraction. Raw scan artifacts live in `.tmp/`
+(`runuo_micro_context_report.md`, `runuo_scripts_setdiff.md`, `runuo_devonly_focus.md`) if a
+detailed trace is ever needed; they are disposable and not the source of truth \u2014 this catalog is.
+
+One durable principle from the passes: **impact is not proportional to diff size**. Several
+one-line edits (durations, follower slots, access thresholds, item policy) are among the
+highest-value concepts, so low-churn files stay in scope for any future review.
+
 ## Starter spells / starter loot philosophy for EQ
 
 RunUO's `CharacterCreation.cs` is explicit: you front-loaded gold, travel, deeds, mounts,

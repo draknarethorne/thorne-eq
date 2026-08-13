@@ -59,6 +59,19 @@ We must design hybrid systems that are:
   - per-zone or per-rule-set enabling,
   - rapid rollback paths.
 
+## 6) Client AA Coverage (Mac/Quarm era limit)
+
+- The classic Mac/Quarm client exposes an **era-limited AA set** (Luclin/PoP-ish), not the
+  modern THJ-scale AA library.
+- **Implication:** THJ-style "AAs are the identity" cannot be assumed 1:1. Audit the available
+  AA set; deliver equivalent powers as **spells, items, or rules** where AAs are unavailable.
+
+## 7) Movement Speed Cap
+
+- The client clamps movement speed; exceeding the safe ceiling causes rubberbanding/warping.
+- **Implication:** a base run-speed floor must stay **cap-aware** — raise the floor, don't break
+  the cap; SoW/JBoots/Selo's stack only up to the safe ceiling.
+
 ## Zeal / Extension Position
 
 **Updated posture (2026-08-11):** approved client DLLs are a **permitted enhancement layer**,
