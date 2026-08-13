@@ -121,14 +121,17 @@
 
 ## Progression & AA
 
-> **Pillar — "easy to 50, earned after":** the 1-50 climb should be smooth and AFK-friendly
-> (THJ-style: park in a found spot, pets sustain vs blue/white spawns, wake up with XP/AA).
-> Past 50 it steepens deliberately. "Finding the spot" is kept as earned knowledge, not friction.
+> **Pillar — "easy to 50, earned after":** the 1-50 climb should be smooth. **Preferred path =
+> Rested/Offline XP+AA** (below): you don't leave a client running, and ALL your characters
+> benefit, not just one you park. In-game pet-sustained AFK is kept as an optional secondary
+> path. Past 50 it steepens deliberately.
 
 | Item | Src | Priority | Phase | Notes |
 | --- | --- | --- | --- | --- |
+| **Rested / Offline XP + AA (preferred)** | WoW/idle | Soon | 3/4 | Characters accrue a capped bonus pool while logged OFF; **all characters benefit** (not just one parked). Consumed as a kill multiplier (must play to claim). Negates the need to leave a client running |
+| **Rested pool cap + monthly reset (anti-abuse)** | — | Soon | 3/4 | Pool caps and resets ~monthly so you can't bank a year offline and return level 60; optionally scale rate by Renown / prior playtime |
 | XP/AA rate tuning (level-band curve) | — | Soon | 3/4 | Generous ≤50 via `rule_values`; steepen 50+; con-based XP keeps it blue/white only |
-| AFK-to-50 grind loop (pillar) | THJ | Soon | 3/4 | Pet-sustained overnight XP/AA to 50; pet-present + leash + con gates; forbidden on yellow/red |
+| AFK-to-50 in-game loop (optional/secondary) | THJ | Later | 4 | Pet-sustained overnight XP/AA; now secondary to Rested XP; pet-present + leash + con gates; forbidden on yellow/red |
 | Self-sustaining pet loop (resummon-on-death %) | THJ | Soon | 3/4 | Necro-style AA/spell proc that re-summons/raises a minion so the AFK loop survives a death — the keystone |
 | Pet overnight survivability tuning | THJ | Soon | 3/4 | Pet self-heal/leech, taunt/hold, auto-attack so a lone/duo setup does not wipe to blue/white spawns |
 | Post-50 difficulty ramp | — | Soon | 4 | 50→51 XP/AA multiplier drop + content out-scales a lone pet on purpose |
@@ -192,6 +195,23 @@
 | Gear durability + repair sink | WoW/Diablo | Later | 5 | Optional coin sink, not item loss; feeds economy sinks |
 | Diminishing returns on rapid deaths | roguelike | Later | 5 | Anti-zerg so hard content stays hard |
 | Momentum loss on death (cross-link) | roguelike | Soon | 3/4 | Primary death sting = losing the streak buff/title (see Renown/Momentum) |
+
+## Retention & Collector Hooks (Sovereign DNA)
+
+> Borrowed from the same instincts as Sovereign Territories: reward *coming back* and
+> *collecting*, never grinding. Keep it humane — no coercive streak traps, no "log in or lose
+> everything." Small-pop tailoring: seasons/goals are personal/co-op, not competitive ladders.
+
+| Item | Src | Priority | Phase | Notes |
+| --- | --- | --- | --- | --- |
+| Renown reward crates | Sovereign/Diablo | Soon | 4 | Openable caches (curated-random) from Renown tiers/dailies/milestones — the "thrill of the pack" without gacha |
+| Tiered pack exchange (AA / shards) | Sovereign | Soon | 4 | Spend AA points or collect shards/tokens to redeem Bronze/Silver/Gold tier packs; same appeal as opening packs, fully earned |
+| Duplicate-fusion crafting | Sovereign | Soon | 4 | Combine duplicate items into an upgraded item with more stats (star/rank); makes dupes valuable + beats boring crafting; extends tokenized tempering |
+| Diablo-style item tiers (rank + color) | Diablo | Later | 5 | Item quality ranks with rarity colors (Green/Blue/etc.) + bonus stats; verify client/Zeal color display; reframes "cosmetics" as loot chase |
+| Bad-luck protection / pity on chase drops | Sovereign | Soon | 4 | Guaranteed drop after N attempts; critical morale lever at low pop |
+| Bestiary / Codex via `#` commands + session counters | Sovereign/Thorne-Timer | Later | 5 | Mobs slain / items found / zones / spells / recipes with completion rewards; view via `#` command or chat (UI-constrained); session feedback (XP ticks, casts, kills) mirrors Thorne-Timer chat-capture — some can live client-side in Zeal/Thorne-Timer |
+| Seasonal + holiday events | THJ/UO | Later | 5 | Holiday login gifts on calendar days (RunUO precedent) + holiday-unique loot drops; personal/co-op seasonal goals, not ladders |
+| Humane-retention guardrail | Sovereign | Soon | 3 | Momentum resets on death (fine) but must NOT become a daily-login streak trap; pair with Rested XP so returning is always "welcome back" |
 
 ## Admin / GM
 

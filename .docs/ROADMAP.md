@@ -124,7 +124,7 @@ early (Phase 2); this phase activates and tunes it. See `BACKLOG.md` sections
 - [ ] Base run-speed floor (**cap-aware**); let SoW/JBoots/Selo's stack to the safe ceiling
 - [ ] Transport runes + Gate-for-all via Soulbinder (grant the effect, not the class spell)
 - [ ] Kill-based faction paths alongside existing quests (no more grind-by-1)
-- [ ] AFK-to-50 loop: pet-sustained overnight XP/AA with con/leash/pet-present gates; resummon-on-death proc
+- [ ] **Rested/Offline XP+AA (preferred)**: capped pool while logged off, all characters benefit, monthly-reset, play-to-consume; in-game pet-AFK optional/secondary
 
 **Casual enablers (low-pop QoL):**
 
