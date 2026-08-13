@@ -165,8 +165,10 @@ Deferred until the core loop is proven. Tracked in `BACKLOG.md`.
 
 ## How we work each phase
 
-1. Pick the smallest slice with a clear exit test.
-2. Put it behind a `rule_values` flag; enable per-character or per-zone first.
-3. Playtest, capture metrics/notes, decide: iterate, ship wider, or revert.
-4. Update `DECISIONS.md` and `BACKLOG.md` as choices are made.
-5. Keep changes forward-migratable; never an irreversible global change in one step.
+1. **Write the spec first** in `.docs/specs/` (Purpose, MVP expression, acceptance test, rollback)
+   so we validate the thesis on paper before pure coding/hacking/fixing.
+2. Pick the smallest slice with a clear exit test.
+3. Put it behind a `rule_values` flag; enable per-character or per-zone first.
+4. Playtest, capture metrics/notes, decide: iterate, ship wider, or revert.
+5. Update `DECISIONS.md` and `BACKLOG.md` as choices are made.
+6. Keep changes forward-migratable; never an irreversible global change in one step.
