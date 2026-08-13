@@ -26,6 +26,8 @@
 | A16 | **Discoverability = chat-first**: Herald NPC + Adventurer's Handbook (in-game patch notes) + one out-of-game delta page; reuse existing Quarm/TAKP quest refs | No new wiki to maintain; prefer self-announcing changes | 2026-08-12 |
 | A17 | **Multi-class is design-validated (THJ), not yet client-validated**: keep the Phase 1 spike to prove Mac/Quarm scribe/memorize/cast of server-granted cross-class spells | THJ ran on a modern client; the classic-client mechanics remain the real unknown | 2026-08-12 |
 | A18 | **Rested/Offline XP+AA is the preferred progression path**: a capped pool accrues while logged off, all characters benefit, consumed by playing (kill multiplier), monthly-reset to prevent banking a year offline; in-game pet-AFK demoted to optional/secondary | Friendlier than leaving a client running; rewards every character; abuse-bounded | 2026-08-12 |
+| A19 | **Spells delivered on-demand via a Grimoire clicky**, not a carried 1-20 satchel: summons only newly-eligible class spells on level-up (scribe in the field); a charge is consumed only if it delivered spells (or a reusable level-gated variant) | Removes spell clutter + the hunt-interrupting vendor run; preserves the scribe ritual | 2026-08-12 |
+| A20 | **Food/water optional (no starvation tax)**: remove the hunger/thirst penalty; keep food/water as optional stat-boost buff-food | Kills mandatory-consumable clutter; self-announcing QoL | 2026-08-12 |
 
 ## Open (need a decision)
 
@@ -45,6 +47,7 @@
 | D12 | Momentum detail | step size, decay, which titles/buffs, armor-tier downgrade | TBD after playtest | Phase 4 |
 | D13 | Meta activation timing | activate after multi-class MVP vs run parallel early | schema early, activate Phase 4 | Phase 2/4 |
 | D14 | Rested accrual tuning | pool size/cap, reset cadence (monthly?), per-char vs account pool, Renown scaling, consume-rate multiplier | monthly cap + per-char + play-to-consume | Phase 3/4 |
+| D15 | Grimoire delivery model | charged draught (consume-on-delivery, quest-scripted) vs reusable level-gated clicky | reusable-first, add charges if wanted | Phase 2/3 |
 
 ## Recently resolved technical facts (not decisions, but settled)
 

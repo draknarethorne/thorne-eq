@@ -358,7 +358,7 @@ and even full spellbook-style support. The closest EQ analogue is very viable.
 Use **items first, automation second**:
 
 - **starter loot** = a new-character boon package
-- **starter spells** = class-specific spell satchels or purchasable spell-set bundles
+- **starter spells** = an on-demand **Grimoire clicky** that summons only newly-eligible class spells on level-up (not a carried 1-20 satchel); scribe in the field. See SPEC-02
 - **later convenience** = optional direct-scribe helper only if the item flow feels too clunky
 
 That mirrors the Featherstone pattern cleanly: preserve the recognizable ritual, remove the

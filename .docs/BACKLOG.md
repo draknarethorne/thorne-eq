@@ -25,9 +25,10 @@
 | On-kill / on-hit leech (earned) | Diablo | Soon | 3 | Death-affinity perk |
 | Longer buff durations | — | Soon | 3 | Rule multiplier |
 | Reagent-lite utility casting | QoL | Soon | 3 | Reduce pearl/bone-chip friction for baseline buffs/ports |
+| Food/water optional (no starvation tax) | QoL | Soon | 3 | Remove hunger/thirst penalty so food/water aren't mandatory clutter; keep as optional stat-boost buff-food. See SPEC-02 3b |
 | Out-of-combat recovery clickies | Diablo/UO | Soon | 3 | Reusable bandages/food-tonics for downtime smoothing |
 | Friends-and-family helper lane | UO | Later | 4 | Not GM power; a bounded assist mode for trusted private-server play |
-| Starter class spell satchel | UO/EQ | Soon | 3 | Grant/sell all vendor-tier scrolls/tomes for a class up to a level band |
+| On-demand spell grimoire (charged/reusable) | EQ/QoL | Soon | 3 | Clicky that summons only NEWLY-eligible class spells on level-up (not a carried 1-20 satchel); consume-charge-only-on-delivery OR reusable level-gated; quest-scripted click. See SPEC-02 3a |
 | Purchasable level-band spell sets | UO/EQ | Soon | 3/4 | e.g. 1-20, 21-40, 41-50 bundles so leveling never becomes a vendor crawl |
 | Starter bank platinum seed | UO | Soon | 3 | One-time per character reserve cushion in bank to prevent early dead-ends; bounded and flag-tracked |
 | Pet auto-attack + hold/guard tuning | THJ | Soon | 3/4 | Small-group + AFK-safe |
