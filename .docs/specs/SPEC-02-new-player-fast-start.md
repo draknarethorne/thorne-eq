@@ -36,20 +36,21 @@ Contents (bounded — practical, not raid-grade):
 
 ### 3a. Spell delivery — on-demand, not a carried satchel
 
-Problem: carrying every 1-20 spell is clutter, and running back to a vendor mid-hunt breaks flow.
+Problem: carrying every spell is clutter, and running back to a vendor mid-hunt breaks flow.
 
-**Model (preferred): a Grimoire clicky/draught** the player uses when they level.
+**Model (chosen): a reusable, tiered Grimoire clicky** the player buys and keeps.
 
-- On use (out of combat), it **summons only the spells newly available** to that class at the
-  current level (and any earlier ones not yet scribed) into a small container; the player scribes
-  normally, preserving the ritual, **in the field**.
-- **Charge economy:** a charge is **consumed only if it actually delivered spells** — leveling
-  into a "no new spell" level is a no-op (no charge spent, "nothing new to learn" message).
-- Class-whitelisted; hard-gated to the character's current level (never future spells).
+- Click (out of combat) **summons only the spells newly available** to the class at the current
+  level (and any earlier ones not yet scribed) into a small container; scribe in the field.
+- **Tiered by level band** — a Tier 1 grimoire covers spells up to L20; the player must **buy the
+  next tier** (L21-40, L41-50, ...) to keep learning. Each tier is a coin (and later Renown) sink
+  and a natural "run back to town and earn it" beat.
+- **Prestige names** per tier make the purchase feel like a reward ("Apprentice's Codex" ->
+  "Adept's Grimoire" -> "Master's Tome"), not a chore.
+- Reusable (no charge bookkeeping); class-whitelisted; hard-gated to current level (never future spells).
 
-**Alternative (simpler): a reusable, level-gated clicky** with no charge accounting — click any
-time to pull newly-eligible spells; if none, it just says so. Trades the charge flavor for less
-bookkeeping. (Open question O-1.)
+**Optional flavor variant:** a charged draught that only spends a charge when it actually
+delivers spells (needs a quest-scripted click). Kept as a cosmetic option, not the baseline.
 
 **Realistic seam:** a **quest-scripted item** (Perl/Lua `EVENT_ITEM_CLICK`) is needed for the
 "only consume on delivery" logic, because stock item charges always decrement on click. The
@@ -96,8 +97,8 @@ nothing extra. No schema damage; claim flags are inert when the feature is off.
 - **Kit contents per class** (armor/weapon/spell list per class + level band).
 - **Per-account vs per-character** subsidy (e.g., first character fully free, alts lighter?).
 - Grant-on-login vs NPC-claim (claim is more discoverable and self-announcing).
-- **O-1:** spell delivery = charged draught (consume-on-delivery, needs quest script) vs a
-  reusable level-gated clicky (simpler)?
+- **O-1 (resolved):** baseline = a reusable, **tiered, purchasable** clicky (prestige-named per
+  level band; buy the next tier to keep learning); charged draught kept as optional flavor only.
 - Spells-per-level varies — confirm delivery diffs correctly against already-scribed spells.
 - Food/water penalty removal: global vs a per-test toggle rule.
 

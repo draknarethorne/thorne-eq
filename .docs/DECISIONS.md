@@ -28,6 +28,8 @@
 | A18 | **Rested/Offline XP+AA is the preferred progression path**: a capped pool accrues while logged off, all characters benefit, consumed by playing (kill multiplier), monthly-reset to prevent banking a year offline; in-game pet-AFK demoted to optional/secondary | Friendlier than leaving a client running; rewards every character; abuse-bounded | 2026-08-12 |
 | A19 | **Spells delivered on-demand via a Grimoire clicky**, not a carried 1-20 satchel: summons only newly-eligible class spells on level-up (scribe in the field); a charge is consumed only if it delivered spells (or a reusable level-gated variant) | Removes spell clutter + the hunt-interrupting vendor run; preserves the scribe ritual | 2026-08-12 |
 | A20 | **Food/water optional (no starvation tax)**: remove the hunger/thirst penalty; keep food/water as optional stat-boost buff-food | Kills mandatory-consumable clutter; self-announcing QoL | 2026-08-12 |
+| A21 | **Spell grimoires are reusable, tiered, purchasable clickies** (prestige-named per level band); buy the next tier to keep learning | Coin/Renown sink + a natural "return to town" beat; charged draught is optional flavor only | 2026-08-12 |
+| A22 | **Renown is also an economy lever**: it scales vendor discounts and gates a "veteran" vendor tier (prestige items requiring a Renown threshold), sold in Bazaar/towns | Gives Renown teeth beyond XP/loot; another reason to contribute | 2026-08-12 |
 
 ## Open (need a decision)
 
@@ -47,7 +49,8 @@
 | D12 | Momentum detail | step size, decay, which titles/buffs, armor-tier downgrade | TBD after playtest | Phase 4 |
 | D13 | Meta activation timing | activate after multi-class MVP vs run parallel early | schema early, activate Phase 4 | Phase 2/4 |
 | D14 | Rested accrual tuning | pool size/cap, reset cadence (monthly?), per-char vs account pool, Renown scaling, consume-rate multiplier | monthly cap + per-char + play-to-consume | Phase 3/4 |
-| D15 | Grimoire delivery model | charged draught (consume-on-delivery, quest-scripted) vs reusable level-gated clicky | reusable-first, add charges if wanted | Phase 2/3 |
+| D15 | Grimoire delivery model | charged draught vs reusable tiered clicky | RESOLVED -> A21 (reusable, tiered, purchasable) | Phase 2/3 |
+| D16 | Cosmetic strategy | matching armor sets + illusions (safe) vs item recolor/dye (TAKP color unknown) | sets + illusions first | Phase 5 |
 
 ## Recently resolved technical facts (not decisions, but settled)
 

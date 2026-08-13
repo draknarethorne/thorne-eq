@@ -28,7 +28,7 @@
 | Food/water optional (no starvation tax) | QoL | Soon | 3 | Remove hunger/thirst penalty so food/water aren't mandatory clutter; keep as optional stat-boost buff-food. See SPEC-02 3b |
 | Out-of-combat recovery clickies | Diablo/UO | Soon | 3 | Reusable bandages/food-tonics for downtime smoothing |
 | Friends-and-family helper lane | UO | Later | 4 | Not GM power; a bounded assist mode for trusted private-server play |
-| On-demand spell grimoire (charged/reusable) | EQ/QoL | Soon | 3 | Clicky that summons only NEWLY-eligible class spells on level-up (not a carried 1-20 satchel); consume-charge-only-on-delivery OR reusable level-gated; quest-scripted click. See SPEC-02 3a |
+| Tiered spell grimoire clickies (reusable) | EQ/QoL | Soon | 3 | Reusable clicky summons only NEWLY-eligible class spells; buy next tier per level band (1-20/21-40/41-50) with prestige names; coin (later Renown) sink + "run back to earn it". See SPEC-02 3a |
 | Purchasable level-band spell sets | UO/EQ | Soon | 3/4 | e.g. 1-20, 21-40, 41-50 bundles so leveling never becomes a vendor crawl |
 | Starter bank platinum seed | UO | Soon | 3 | One-time per character reserve cushion in bank to prevent early dead-ends; bounded and flag-tracked |
 | Pet auto-attack + hold/guard tuning | THJ | Soon | 3/4 | Small-group + AFK-safe |
@@ -50,6 +50,7 @@
 | Totem/ward pseudo-pets | Diablo | Soon | 3 | Use immobile or timed NPC helpers instead of full permanent pets |
 | Treasure-goblin escort pet / mule pet | UO/Diablo | Icebox | 6 | Cute, but likely UI-heavy and messy for inventory ownership |
 | Pet equipment simplification | QoL | Later | 5 | Either curated equipment slots or no-gear pets to avoid micromanagement |
+| Pet illusion clicky rods | THJ | Later | 5 | Clicky "rods" that reskin your pet into allowed mob illusions; cosmetic pet customization via the EQ illusion mechanism |
 
 ## Anti-EverGrind Time-Saver Pass (base tweaks to the biggest time-wasters)
 
@@ -113,6 +114,8 @@
 | Vendor restock schedule + scarcity tags | UO | Soon | 4 | Rotating item pools with predictable windows so players can plan |
 | Price band guardrails (floor/cap) | MMO ops | Soon | 4 | Prevent extreme inflation/deflation and easy arbitrage loops |
 | Faction-based service discounts | EQ/UO | Later | 5 | Small economy identity without undermining core sinks |
+| Renown-scaled vendor discounts | THJ/MMO | Soon | 4 | Higher Renown = cheaper buys; ties the contribution meter to the economy as a soft reward |
+| Renown-gated "veteran" vendor tier | THJ/EQ | Soon | 4 | Certain prestige/veteran items require a Renown threshold to buy; sold by NPCs in Bazaar (or every town) |
 | Sink pass for convenience economy | MMO ops | Soon | 4 | Travel permits, service fees, token rerolls to keep plat velocity healthy |
 | Economy observability dashboard/logs | MMO ops | Later | 5 | Track plat faucets/sinks, staple availability, and exploit detection signals |
 | Item policy tiers (protected/risky/volatile) | MMO ops | Later | 5 | Define clear loss/protection semantics for convenience items vs. high-value progression items |
@@ -209,6 +212,7 @@
 | Tiered pack exchange (AA / shards) | Sovereign | Soon | 4 | Spend AA points or collect shards/tokens to redeem Bronze/Silver/Gold tier packs; same appeal as opening packs, fully earned |
 | Duplicate-fusion crafting | Sovereign | Soon | 4 | Combine duplicate items into an upgraded item with more stats (star/rank); makes dupes valuable + beats boring crafting; extends tokenized tempering |
 | Diablo-style item tiers (rank + color) | Diablo | Later | 5 | Item quality ranks with rarity colors (Green/Blue/etc.) + bonus stats; verify client/Zeal color display; reframes "cosmetics" as loot chase |
+| Purchasable matching armor sets | MMO | Later | 5 | Buy a cohesive full visual suit for appeal instead of random-color stat drops; sidesteps a dye/recolor system (TAKP color handling unknown) |
 | Bad-luck protection / pity on chase drops | Sovereign | Soon | 4 | Guaranteed drop after N attempts; critical morale lever at low pop |
 | Bestiary / Codex via `#` commands + session counters | Sovereign/Thorne-Timer | Later | 5 | Mobs slain / items found / zones / spells / recipes with completion rewards; view via `#` command or chat (UI-constrained); session feedback (XP ticks, casts, kills) mirrors Thorne-Timer chat-capture — some can live client-side in Zeal/Thorne-Timer |
 | Seasonal + holiday events | THJ/UO | Later | 5 | Holiday login gifts on calendar days (RunUO precedent) + holiday-unique loot drops; personal/co-op seasonal goals, not ladders |

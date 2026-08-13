@@ -72,6 +72,13 @@ We must design hybrid systems that are:
 - **Implication:** a base run-speed floor must stay **cap-aware** — raise the floor, don't break
   the cap; SoW/JBoots/Selo's stack only up to the safe ceiling.
 
+## 8) Cosmetic Display (TAKP client unknowns)
+
+- How the TAKP/Mac client handles **item tint / rarity colors** is not yet confirmed; prefer
+  **curated matching sets** and distinct models over a dye/recolor system until verified.
+- **Illusions** (player and pet) are a known EQ mechanism (illusion spells/items) and are the
+  safe path for pet reskins ("clicky rods") without client changes.
+
 ## Zeal / Extension Position
 
 **Updated posture (2026-08-11):** approved client DLLs are a **permitted enhancement layer**,
